@@ -1,0 +1,15 @@
+ID: 8
+Titulo: Love
+Genero: Relacionamento
+Autor: Ema Nu Eller
+Ano de Publicacao: 2013
+Preco: 23.44
+Formato: MOBI
+
+ID: 9
+Titulo: Lather Sky
+Genero: jogos
+Autor: Skyrim
+Ano de Publicacao: 2012
+Preco: 11.99
+Formato: PDF

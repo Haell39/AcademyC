@@ -64,5 +64,39 @@ int main() {
             printf("Formato invalido!\n");
     }
 
+    // Criando e escrevendo os dados em um arquivo texto na pasta Banco_ebooks
+    FILE *file = fopen("D:\\GitHub Desktop\\C_CodeLab\\College\\My_Struct\\Banco_ebooks\\ebook.txt", "a");  // Abre um arquivo para anexação
+    if (file == NULL) {
+        printf("Erro ao abrir o arquivo!\n");
+        return 1;  // Retorna um erro se não conseguir abrir o arquivo
+    }
+
+    // Escrevendo os dados no arquivo, adicionando uma linha em branco antes de novos dados para melhor legibilidade
+    fprintf(file, "\nID: %d\n", ebook.id);
+    fprintf(file, "Titulo: %s\n", ebook.titulo);
+    fprintf(file, "Genero: %s\n", ebook.genero);
+    fprintf(file, "Autor: %s\n", ebook.autor);
+    fprintf(file, "Ano de Publicacao: %d\n", ebook.ano_publicacao);
+    fprintf(file, "Preco: %.2f\n", ebook.preco);
+
+    switch (ebook.formato) {
+        case 'P':
+            fprintf(file, "Formato: PDF\n");
+            break;
+        case 'E':
+            fprintf(file, "Formato: EPUB\n");
+            break;
+        case 'M':
+            fprintf(file, "Formato: MOBI\n");
+            break;
+        default:
+            fprintf(file, "Formato invalido!\n");
+            break;
+    }
+
+    fclose(file);  // Fecha o arquivo após a escrita
+
+    printf("\nOs dados foram salvos em 'D:\\GitHub Desktop\\C_CodeLab\\College\\My_Struct\\Banco_ebooks\\ebook.txt'.\n");
+
     return 0;
 }
