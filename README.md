@@ -1,2 +1,2 @@
-# C_CodeLab
+# AcademyC
  For more complex and advanced studies and projects in C language
