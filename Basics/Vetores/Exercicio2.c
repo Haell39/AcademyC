@@ -1,6 +1,6 @@
 /*
-*Cálculo da Soma dos Elementos:
-?Modifique o programa anterior para calcular e imprimir a soma dos números lidos.
+uu Cálculo da Soma dos Elementos:
+oo Modifique o programa anterior para calcular e imprimir a soma dos números lidos.
 */
 
 #include <stdio.h>
