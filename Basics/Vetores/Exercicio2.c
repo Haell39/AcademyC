@@ -11,14 +11,10 @@ int main () {
         printf("Enter the number %d: ", i + 1);
         scanf("%d", &nums[i]);
         sum += nums[i]; //adiciona cada numero à soma
-        //*se fosse o produto: sum *= nums[i];
-        //*se fosse a divisão: sum /= nums[i];
-        //*se fosse a subtração: sum -= nums[i];
-
-        //  note ff
-        //  seeste é outro comentário e ficará azul
+        //note: se fosse o produto: sum *= nums[i]; 
+        //note: se fosse a divisão: sum /= nums[i];
+        //note: se fosse a subtração: sum -= nums[i];
         
-
     }
 
     printf("The sum of the numbers are: %d\n", sum);
