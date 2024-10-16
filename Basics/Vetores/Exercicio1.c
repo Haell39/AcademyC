@@ -7,7 +7,18 @@
 
 int main()
 {
+    int nums[5];
+    for (int i = 0; i < 5; i++)
+    {
+        printf("Enter the number %d: ", i + 1);
+        scanf("%d", &nums[i]);
+    }
 
+    printf("The numbers entered are: ");
+    for (int i = 0; i < 5; i++)
+    {
+        printf("%d ", nums[i]);
+    }
 
-    
+    return 0;
 }
