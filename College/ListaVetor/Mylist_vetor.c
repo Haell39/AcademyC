@@ -11,9 +11,11 @@
  *            mostrar elementos,                                  *
  *            atualizar elementos,                                *
  *            excluir lista.                                      *
- * Autor: Mayrton Dias                                            *
- * Ultima alteracao: 18/09/2024                                   *
+ * Autor: Rafael Andrade                                            *
+ * Ultima alteracao: 19/10/2024                                   *
  ******************************************************************/
+
+// ** OBS: Tirei todos os caracteres especiais e acentos para nao dar conflito com o C
 
 #include <stdio.h>
 #include <stdlib.h>
@@ -21,7 +23,7 @@
 
 #define TAM 5 // Define o tamanho
 
-/* Definição da estrutura para Pacote de Viagem */
+/* Definicao da estrutura para Pacote de Viagem */
 typedef struct
 {
     int id;
@@ -31,14 +33,14 @@ typedef struct
     char tipoTransporte;
 } Pacote;
 
-/* Definição da estrutura da Lista */
+/* Definicao da estrutura da Lista */
 typedef struct
 {
     int tamanho;       // Quantidade de pacotes na lista
     Pacote *elementos; // Vetor de Pacotes
 } Lista;
 
-/* Funções implementadas */
+/* Funcões implementadas */
 int atualizarElemento(Lista *, int, Pacote);
 int buscarElemento(Lista *, int);
 Lista *criarLista();
@@ -49,14 +51,14 @@ int removerElemento(Lista *, int);
 void carregarDados(Lista *);
 void salvarDados(Lista *);
 
-/* Função principal */
+/* Funcao principal */
 int main()
 {
     Lista *lista = criarLista();
     if (lista == NULL)
     {
         printf("Erro ao criar a lista.\n");
-        return 1; // Retorna erro se a lista não for criada OBS: retorno diferente de 0 geralmente sinaliza uma falha.
+        return 1; // Retorna erro se a lista nao for criada OBS: retorno diferente de 0 geralmente sinaliza uma falha.
     }
 
     /* Carregar dados do arquivo */
@@ -66,7 +68,7 @@ int main()
     printf("Dados carregados:\n");
     imprimirElementos(lista); // Verifique se está imprimindo algo
 
-    /* Inserção dos pacotes de viagem */
+    /* Insercao dos pacotes de viagem */
     printf("Inserindo pacotes...\n");
     Pacote p1 = {1, "Paris", 3500.00, 7, 'A'};
     Pacote p2 = {2, "Rio_de_Janeiro", 1500.00, 5, 'B'};
@@ -74,7 +76,7 @@ int main()
     Pacote p4 = {4, "Amsterda", 2500.00, 4, 'B'};
     Pacote p5 = {5, "Barcelona", 3000.00, 6, 'A'};
 
-    // É aq onde o usuario vai fazer as açoes: inserir, atualizar, remover, ... os pacotes
+    // É aq onde o usuario vai fazer as acoes: inserir, atualizar, remover, ... os pacotes
 
     inserirElemento(lista, p1);
     inserirElemento(lista, p2);
@@ -84,12 +86,12 @@ int main()
 
     buscarElemento(lista, 2);
 
-    printf("Imprimindo elementos após inserção:\n");
+    printf("Imprimindo elementos apos insercao:\n");
     imprimirElementos(lista);
 
-    removerElemento(lista, 1); // Exemplo de remoção de um pacote
+    removerElemento(lista, 1); // Exemplo de remocao de um pacote
     removerElemento(lista, 5);
-    printf("Imprimindo elementos após remoção:\n");
+    printf("Imprimindo elementos apos remocao:\n");
     imprimirElementos(lista);
 
     /* Atualizar um pacote */
@@ -97,7 +99,7 @@ int main()
     Pacote p_atualizado = {2, "Rio_de_Janeiro", 1800.00, 6, 'A'};
     atualizarElemento(lista, 2, p_atualizado);
 
-    printf("Imprimindo elementos após atualização:\n");
+    printf("Imprimindo elementos apos atualizacao:\n");
     imprimirElementos(lista);
 
     /* Salvar dados no arquivo txt */
@@ -107,68 +109,68 @@ int main()
     lista = excluirLista(lista);
     if (lista == NULL)
     {
-        printf("Lista excluída com sucesso.\n");
+        printf("Lista excluida com sucesso.\n");
     }
 
     return 0;
 }
 
-/* Função que cria a lista */
+/* Funcao que cria a lista */
 Lista *criarLista()
 {
-    Lista *nova = (Lista *)malloc(sizeof(Lista)); // Aloca memória para a nova lista
+    Lista *nova = (Lista *)malloc(sizeof(Lista)); // Aloca memoria para a nova lista
     if (nova == NULL)
     {
         printf("Erro ao criar a lista.\n");
-        return NULL; // Vai retorna NULL se não conseguir alocar memória
+        return NULL; // Vai retorna NULL se nao conseguir alocar memoria
     }
 
     nova->tamanho = 0;                                        // inicializa o tamanho da lista como 0
-    nova->elementos = (Pacote *)malloc(TAM * sizeof(Pacote)); // aloca memória para os pacotes
+    nova->elementos = (Pacote *)malloc(TAM * sizeof(Pacote)); // aloca memoria para os pacotes
     if (nova->elementos == NULL)                              //
     {
-        printf("Erro ao alocar memória para elementos.\n");
-        free(nova);  // Libera memória já alocada para a lista
-        return NULL; // denovo vai retorna NULL se não conseguir alocar memória
+        printf("Erro ao alocar memoria para elementos.\n");
+        free(nova);  // Libera memoria já alocada para a lista
+        return NULL; // denovo vai retorna NULL se nao conseguir alocar memoria
     }
     return nova;
 }
 
-/* Função para excluir a lista */
+/* Funcao para excluir a lista */
 Lista *excluirLista(Lista *lista)
 {
     if (lista == NULL)
     {
-        printf("A lista não foi criada.\n");
-        return NULL; // Retorna NULL se a lista não existe
+        printf("A lista nao foi criada.\n");
+        return NULL; // Retorna NULL se a lista nao existe
     }
-    free(lista->elementos); // Libera memória dos elementos da lista
-    free(lista);            // Libera memória da lista (da propria lista)
-    return NULL;            // Aqui retorna NULL, mas é pelo fato de indicar que a lista foi excluída, ou pelo menos é oq eu entendi(anotações caderno)
+    free(lista->elementos); // Libera memoria dos elementos da lista
+    free(lista);            // Libera memoria da lista (da propria lista)
+    return NULL;            // Aqui retorna NULL, mas é pelo fato de indicar que a lista foi excluida, ou pelo menos é oq eu entendi(anotacões caderno)
 }
 
-/* Função para imprimir os pacotes */
+/* Funcao para imprimir os pacotes */
 void imprimirElementos(Lista *lista)
 {
     if (lista == NULL || lista->tamanho == 0)
     {
-        printf("Lista vazia ou não criada.\n"); // Mensagem se a lista estiver vazia ou não existir
+        printf("Lista vazia ou nao criada.\n"); // Mensagem se a lista estiver vazia ou nao existir
         return;
     }
     for (int i = 0; i < lista->tamanho; ++i)
     {
         Pacote p = lista->elementos[i];
-        printf("ID: %d, Destino: %s, Preço: %.2f, Duração: %d dias, Transporte: %c\n",
+        printf("ID: %d, Destino: %s, Preco: %.2f, Duracao: %d dias, Transporte: %c\n",
                p.id, p.destino, p.precoPacote, p.duracaoDias, p.tipoTransporte);
     }
 }
 
-/* Função para inserir um pacote */
+/* Funcao para inserir um pacote */
 int inserirElemento(Lista *lista, Pacote pacote)
 {
     if (lista == NULL)
     {
-        printf("A lista não foi criada.\n");
+        printf("A lista nao foi criada.\n");
         return 0; // se lista nao existe
     }
 
@@ -178,22 +180,22 @@ int inserirElemento(Lista *lista, Pacote pacote)
         lista->elementos = realloc(lista->elementos, (lista->tamanho + TAM) * sizeof(Pacote));
         if (lista->elementos == NULL)
         {
-            printf("Erro ao alocar mais memória para elementos.\n");
+            printf("Erro ao alocar mais memoria para elementos.\n");
             return 0; // Retorna 0 se falhar ao aumentar a capacidade
         }
     }
-    // acredito com base nas minhas anotações aq eu poderia atualizar o ponteiro: lista->elementos = temp; mas em time que ta ganhando nao se mexe, se rodou rodou
+    // acredito com base nas minhas anotacões aq eu poderia atualizar o ponteiro: lista->elementos = temp; mas em time que ta ganhando nao se mexe, se rodou rodou
     lista->elementos[lista->tamanho] = pacote;
     lista->tamanho++;
-    return 1; // O retorno 1 indica que a remoção foi bem-sucedida, diferente de como foi utilizado anteriormente no inicio do codigo
+    return 1; // O retorno 1 indica que a remocao foi bem-sucedida, diferente de como foi utilizado anteriormente no inicio do codigo
 }
 
-/* Função para remover um pacote */
+/* Funcao para remover um pacote */
 int removerElemento(Lista *lista, int id)
 {
     if (lista == NULL)
     {
-        printf("A lista não foi criada.\n");
+        printf("A lista nao foi criada.\n");
         return 0; // 0 se nao existe
     }
 
@@ -203,22 +205,22 @@ int removerElemento(Lista *lista, int id)
         {
             for (int j = i; j < lista->tamanho - 1; ++j)
             {
-                // Move os pacotes subsequentes uma posição para frente
+                // Move os pacotes subsequentes uma posicao para frente
                 lista->elementos[j] = lista->elementos[j + 1];
             }
-            lista->tamanho--; // Decrementa o tamanho da lista após remoção
+            lista->tamanho--; // Decrementa o tamanho da lista apos remocao
             return 1;         // Retorna 1 indicando que o pacote foi removido com sucesso
         }
     }
 
-    printf("Elemento não encontrado.\n");
+    printf("Elemento nao encontrado.\n");
     return 0;
 }
 
-/* Função para carregar dados do arquivo */
+/* Funcao para carregar dados do arquivo */
 void carregarDados(Lista *lista)
 {
-    FILE *file = fopen("D:\\GitHub Desktop\\C_CodeLab\\College\\ListaVetor\\BancoDados.txt", "r"); // deve se usar \\ pois o C vai interpretar como se fosse 1 barra "\", pois uma só barra é usada para "\n"
+    FILE *file = fopen("D:\\GitHub Desktop\\C_CodeLab\\College\\ListaVetor\\BancoDados.txt", "r"); // deve se usar \\ pois o C vai interpretar como se fosse 1 barra "\", pois uma so barra é usada para "\n"
     if (file == NULL)
     {
         printf("Erro ao abrir arquivo.\n");
@@ -226,7 +228,7 @@ void carregarDados(Lista *lista)
     }
 
     Pacote p;
-    while (fscanf(file, "%d %49s %f %d %c", &p.id, p.destino, &p.precoPacote, // OBS: %49s: Lê uma string (até 49 caracteres) e a armazena em p.destino. O limite de 49 garante que não ocorra overflow no buffer.
+    while (fscanf(file, "%d %49s %f %d %c", &p.id, p.destino, &p.precoPacote, // OBS: %49s: Lê uma string (até 49 caracteres) e a armazena em p.destino. O limite de 49 garante que nao ocorra overflow no buffer.
                   &p.duracaoDias, &p.tipoTransporte) != EOF)
     {
         inserirElemento(lista, p);
@@ -234,7 +236,7 @@ void carregarDados(Lista *lista)
     fclose(file);
 }
 
-/* Função para salvar dados no arquivo */
+/* Funcao para salvar dados no arquivo */
 void salvarDados(Lista *lista)
 {
     FILE *file = fopen("D:\\GitHub Desktop\\C_CodeLab\\College\\ListaVetor\\BancoDados.txt", "w");
@@ -252,12 +254,12 @@ void salvarDados(Lista *lista)
     fclose(file);
 }
 
-/* Função para buscar um elemento por ID */
+/* Funcao para buscar um elemento por ID */
 int buscarElemento(Lista *lista, int id)
 {
     if (lista == NULL)
     {
-        printf("A lista não foi criada.\n");
+        printf("A lista nao foi criada.\n");
         return -1; // Isso é uma forma de indicar que houve um erro ao tentar buscar um elemento.
     }
 
@@ -265,24 +267,24 @@ int buscarElemento(Lista *lista, int id)
     {
         if (lista->elementos[i].id == id)
         {
-            return i; // Retorna o índice do pacote encontrado
+            return i; // Retorna o indice do pacote encontrado
         }
     }
 
-    printf("Elemento não encontrado.\n");
+    printf("Elemento nao encontrado.\n");
     return -1;
 }
 
-/* Função para atualizar um pacote */
+/* Funcao para atualizar um pacote */
 int atualizarElemento(Lista *lista, int id, Pacote pacoteAtualizado)
 {
     int index = buscarElemento(lista, id);
     if (index == -1)
     {
-        printf("Erro: Elemento com ID %d não encontrado.\n", id);
+        printf("Erro: Elemento com ID %d nao encontrado.\n", id);
         return 0;
     }
 
-    lista->elementos[index] = pacoteAtualizado; // Atualiza o pacote no índice encontrado
+    lista->elementos[index] = pacoteAtualizado; // Atualiza o pacote no indice encontrado
     return 1;
 }

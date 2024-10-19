@@ -31,8 +31,15 @@ int inserirCarroID(Lista*, Carro, int);
 int inserirCarroInicio(Lista*, Carro);
 int removerCarro(Lista*, int);
 
+// Funções para carregar e salvar dados
+void carregarDados(Lista*);
+void salvarDados(Lista*);
+
 int main() {
     Lista *lista = criarLista();
+    
+    // Carregar dados do arquivo
+    carregarDados(lista);
     
     // Exemplo de chamada das funções
     imprimirCarros(lista);
@@ -65,11 +72,46 @@ int main() {
     inserirCarroInicio(lista, carro4);
     imprimirCarros(lista);
 
+    // Salvar dados antes de excluir a lista
+    salvarDados(lista);
     lista = excluirLista(lista);
-    imprimirCarros(lista);
     
     return 0;
 }
+
+void carregarDados(Lista *lista) {
+    FILE *file = fopen("C:/Users/User/c/Carros.txt", "r");
+    if (file == NULL) {
+        printf("Erro ao abrir arquivo\n");
+        return;
+    }
+    
+    Carro carro;
+    while (fscanf(file, "%d %49s %49s %d %19s %f %f %29s %c",
+                  &carro.id, carro.marca, carro.modelo, 
+                  &carro.ano, carro.cor, &carro.quilometragem, 
+                  &carro.valor, carro.categoria, &carro.disponibilidade) != EOF) {
+        inserirCarro(lista, carro);
+    }
+    fclose(file);
+}
+
+void salvarDados(Lista *lista) {
+    FILE *file = fopen("C:/Users/User/c/Carros.txt", "w");
+    if (file == NULL) {
+        printf("Erro ao salvar arquivo.\n");
+        return;
+    }
+    
+    for (int i = 0; i < lista->id; ++i) {
+        Carro *p = &lista->elementos[i];
+        fprintf(file, "%d %s %s %d %s %.2f %.2f %s %c\n", 
+                p->id, p->marca, p->modelo, p->ano, p->cor, 
+                p->quilometragem, p->valor, p->categoria, p->disponibilidade);
+    }
+    fclose(file);
+}
+
 
 int atualizarCarro(Lista *lista, int id, Carro carro) {
     int i;
@@ -225,6 +267,10 @@ int inserirCarroInicio(Lista *lista, Carro carro) {
 
     return 1;
 }
+
+
+
+
 
 int removerCarro(Lista *lista, int id) {
     int i, j;
