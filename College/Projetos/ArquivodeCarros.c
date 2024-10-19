@@ -3,7 +3,7 @@
 #include <string.h>
 
 #define TAM 5
-#define ARQUIVO "D:\\GitHub Desktop\\C_CodeLab\\BancoYuri.txt"
+#define ARQUIVO "D:\\GitHub Desktop\\C_CodeLab\\College\\Projetos\\BancoYuri.txt"
 
 typedef struct
 {

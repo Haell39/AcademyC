@@ -1,7 +1,0 @@
-ID: 1
-Titulo: O Alquimista cego
-Genero: Mitologia
-Autor: Paulo Gneade
-Ano de Publicacao: 1898
-Preco: 79.98
-Formato: MOBI
