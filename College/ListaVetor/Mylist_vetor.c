@@ -220,12 +220,14 @@ int removerElemento(Lista *lista, int id)
 /* Funcao para carregar dados do arquivo */
 void carregarDados(Lista *lista)
 {
-    FILE *file = fopen("D:\\GitHub Desktop\\C_CodeLab\\College\\ListaVetor\\BancoDados.txt", "r"); // deve se usar \\ pois o C vai interpretar como se fosse 1 barra "\", pois uma so barra é usada para "\n"
+    FILE *file = fopen("D:\\GitHub Desktop\\C_CodeLab\\College\\ListaVetor\\BancoDados.txt", "r"); // caminho no meu computador
     if (file == NULL)
-    {
-        printf("Erro ao abrir arquivo.\n");
-        return;
-    }
+        // OBS: deve se usar \\ para o C vai interpretar como se fosse 1 barra "\", pois uma só barra é usada para "\n"
+        if (file == NULL)
+        {
+            printf("Erro ao abrir arquivo.\n");
+            return;
+        }
 
     Pacote p;
     while (fscanf(file, "%d %49s %f %d %c", &p.id, p.destino, &p.precoPacote, // OBS: %49s: Lê uma string (até 49 caracteres) e a armazena em p.destino. O limite de 49 garante que nao ocorra overflow no buffer.
@@ -239,7 +241,7 @@ void carregarDados(Lista *lista)
 /* Funcao para salvar dados no arquivo */
 void salvarDados(Lista *lista)
 {
-    FILE *file = fopen("D:\\GitHub Desktop\\C_CodeLab\\College\\ListaVetor\\BancoDados.txt", "w");
+    FILE *file = fopen("D:\\GitHub Desktop\\C_CodeLab\\College\\ListaVetor\\BancoDados.txt", "w"); // caminho no meu computador
     if (file == NULL)
     {
         printf("Erro ao salvar arquivo.\n");
