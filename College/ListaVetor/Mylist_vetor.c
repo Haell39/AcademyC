@@ -220,7 +220,7 @@ int removerElemento(Lista *lista, int id)
 /* Funcao para carregar dados do arquivo */
 void carregarDados(Lista *lista)
 {
-    FILE *file = fopen("BancoDados.txt", "r"); // deve se usar \\ pois o C vai interpretar como se fosse 1 barra "\", pois uma so barra é usada para "\n"
+    FILE *file = fopen("D:\\GitHub Desktop\\C_CodeLab\\College\\ListaVetor\\BancoDados.txt", "r"); // deve se usar \\ pois o C vai interpretar como se fosse 1 barra "\", pois uma so barra é usada para "\n"
     if (file == NULL)
     {
         printf("Erro ao abrir arquivo.\n");
@@ -239,7 +239,7 @@ void carregarDados(Lista *lista)
 /* Funcao para salvar dados no arquivo */
 void salvarDados(Lista *lista)
 {
-    FILE *file = fopen("BancoDados.txt", "w");
+    FILE *file = fopen("D:\\GitHub Desktop\\C_CodeLab\\College\\ListaVetor\\BancoDados.txt", "w");
     if (file == NULL)
     {
         printf("Erro ao salvar arquivo.\n");
