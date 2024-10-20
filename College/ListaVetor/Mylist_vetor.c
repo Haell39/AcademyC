@@ -11,11 +11,11 @@
  *            mostrar elementos,                                  *
  *            atualizar elementos,                                *
  *            excluir lista.                                      *
- * Autor: Rafael Andrade                                            *
+ * Autor: Rafael Andrade                                          *
  * Ultima alteracao: 19/10/2024                                   *
  ******************************************************************/
 
-// ** OBS: Tirei todos os caracteres especiais e acentos para nao dar conflito com o C
+// ** OBS: Tirei todos os caracteres especiais e acentos para nao dar conflito com o compilador do C
 
 #include <stdio.h>
 #include <stdlib.h>
