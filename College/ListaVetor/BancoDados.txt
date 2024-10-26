@@ -1,3 +1,6 @@
 2 Rio_de_Janeiro 1800.00 6 A
 3 Londres 2000.00 3 A
 4 Amsterda 2500.00 4 B
+2 Rio_de_Janeiro 1500.00 5 B
+3 Londres 2000.00 3 A
+4 Amsterda 2500.00 4 B
