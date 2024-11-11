@@ -41,10 +41,10 @@ int main()
     Lista *lista = criarLista();
     ListaNo *pesquisa = NULL;
 
-    /* ^^ Aqui se tiver pacotes, ele vai carregar */
+    /* ^^ carregar pacotes se tiver */
     carregarLista(lista);
 
-    /* ^^ Aqui sao os pacotes e os dados de cada pacote */
+    /* ^^ dados de cada pacote e os pacotes em questão */
     Pacote pacote1 = {1, "Rio de Janeiro", 1500.0, 5, 'A'};
     Pacote pacote2 = {2, "Sao Paulo", 1200.0, 3, 'B'};
     Pacote pacote3 = {3, "Bahia", 2000.0, 7, 'A'};
@@ -55,10 +55,10 @@ int main()
 
     imprimirPacotes(lista);
 
-    /* ^^ Aqui vai salvar a lista em um arquivo */
+    /* ^^ salvar a lista em um arquivo */
     salvarLista(lista);
 
-    /* ^^ Aqui vai buscar pelo pacote com o id 1 */
+    /* ^^ buscar pelo pacote com o id 1 */
     pesquisa = buscarPacote(lista, 1);
     if (pesquisa == NULL)
     {
@@ -69,7 +69,7 @@ int main()
         printf("Pacote encontrado: %s\n", pesquisa->pacote->destino);
     }
 
-    /* ^^ Aqui vai remover o pacote com o id 1 */
+    /* ^^ remover o pacote com o id 1 */
     printf("Removendo o pacote com ID 1\n");
     removerPacote(lista, 1);
     imprimirPacotes(lista);
@@ -78,7 +78,7 @@ int main()
     return 0;
 }
 
-/* ^^ Aqui vai atualizar os dados de um pacote na lista */
+/* ^^ atualizar os dados de um pacote na lista */
 int atualizarPacote(Lista *lista, int id, Pacote *novoPacote)
 {
     if (lista == NULL || lista->prim == NULL)
@@ -89,7 +89,7 @@ int atualizarPacote(Lista *lista, int id, Pacote *novoPacote)
 
     ListaNo *p;
 
-    /* ^^ Aqui vai percorrer a lista procurando o pacote com o id fornecido */
+    /* ^^ percorrer a lista procurando o pacote com o id fornecido */
     for (p = lista->prim; p != NULL; p = p->prox)
     {
         if (p->pacote->id == id)
@@ -102,7 +102,7 @@ int atualizarPacote(Lista *lista, int id, Pacote *novoPacote)
     return 0;
 }
 
-/* ^^ Aqui é a funcao que vai buscar um pacote pelo seu id */
+/* ^^ funcao que vai buscar um pacote pelo seu id */
 ListaNo *buscarPacote(Lista *lista, int id)
 {
     if (lista == NULL || lista->prim == NULL)
@@ -124,7 +124,7 @@ ListaNo *buscarPacote(Lista *lista, int id)
     return NULL;
 }
 
-/* ^^ Aqui vai criar uma nova lista */
+/* ^^ criar uma nova lista */
 Lista *criarLista()
 {
     Lista *nova = (Lista *)malloc(sizeof(Lista));
@@ -140,7 +140,7 @@ Lista *criarLista()
     return nova;
 }
 
-/* ^^ Aqui é a funcao que exclui a lista e libera memória alocada */
+/* ^^ funcao que exclui a lista e libera memória alocada */
 Lista *excluirLista(Lista *lista)
 {
     if (lista == NULL)
@@ -164,7 +164,7 @@ Lista *excluirLista(Lista *lista)
     return NULL;
 }
 
-/* ^^ Aqui adiciona um pacote na lista */
+/* ^^ adiciona um pacote na lista */
 int inserirPacote(Lista *lista, Pacote *pacote)
 {
     ListaNo *novaNo = (ListaNo *)malloc(sizeof(ListaNo));
@@ -206,7 +206,7 @@ int inserirPacote(Lista *lista, Pacote *pacote)
     return 1;
 }
 
-/* ^^ imprimir todos os pacotes da lista */
+/* ^^ todos os pacotes da lista */
 void imprimirPacotes(Lista *lista)
 {
     if (lista == NULL || lista->prim == NULL)
@@ -245,7 +245,7 @@ int removerPacote(Lista *lista, int id)
         return 1;
     }
 
-    /* ^^ Aqui vai percorrer a lista procurando o pacote que vai ser removido */
+    /* ^^ percorrer a lista procurando o pacote que vai ser removido */
     while (p->prox != NULL)
     {
         if (p->prox->pacote->id == id)
@@ -282,7 +282,7 @@ int salvarLista(Lista *lista)
 
     ListaNo *p;
 
-    /* ^^ Aqui vai percorrer a lista e pegar os dados de cada pacote para colocar no arquivo */
+    /* ^^ percorrer a lista pra pegar os dados de cada pacote para colocar no arquivo */
     for (p = lista->prim; p != NULL; p = p->prox)
     {
         fprintf(arquivo, "%d;%s;%.2f;%d;%c\n",
@@ -316,7 +316,7 @@ int carregarLista(Lista *lista)
 
     Pacote *pacote;
 
-    /* ^^ Aqui vai ler os dados do arquivo e colocar eles na lista */
+    /* ^^ leitura dos dados do arquivo e colocar eles na lista */
     while ((pacote = (Pacote *)malloc(sizeof(Pacote))) != NULL &&
            fscanf(arquivo, "%d;%49[^;];%f;%d;%c\n",
                   &pacote->id, pacote->destino,
