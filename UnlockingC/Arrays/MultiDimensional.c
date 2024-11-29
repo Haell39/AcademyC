@@ -2,7 +2,7 @@
 
 int main()
 {
-    // Declaração de uma matriz 2x2 chamada 'a'
+    // ^^ Declaração de uma matriz 2x2 chamada 'a'
     int a[2][2];
     printf("Enter the values rows and columns of the array A: \n");
 
@@ -18,7 +18,7 @@ int main()
         }
     }
 
-    // Declaração de duas matrizes 3x3 chamadas 'b' e 'c'
+    // ^^ Declaração de duas matrizes 3x3 chamadas 'b' e 'c'
     int b[3][3], c[3][3];
     printf("Enter the values for the sum of arrays B and C: \n");
 
@@ -34,7 +34,7 @@ int main()
         }
     }
 
-    // Loop para ler os valores da matriz 'c'
+    // << Loop para ler os valores da matriz 'c'
     for (int k = 0; k < 3; k++) // Itera sobre as linhas da matriz
     {
         for (int j = 0; j < 3; j++) // Itera sobre as colunas da matriz
@@ -48,7 +48,7 @@ int main()
 
     printf("\n"); // Imprime uma linha em branco para melhor legibilidade
 
-    // Loop para calcular e exibir a soma das matrizes 'b' e 'c'
+    // << Loop para calcular e exibir a soma das matrizes 'b' e 'c'
     for (int k = 0; k < 3; k++) // Itera sobre as linhas
     {
         for (int j = 0; j < 3; j++) // Itera sobre as colunas
