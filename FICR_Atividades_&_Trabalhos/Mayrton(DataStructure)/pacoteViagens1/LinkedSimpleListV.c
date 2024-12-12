@@ -1,4 +1,3 @@
-
 /******************************************************************
  * Nome: Lista com vetores                                        *
  * Descricao: Implementacao de lista com uso de vetores (array).  *
@@ -54,63 +53,185 @@ void salvarDados(Lista *);
 /* Funcao principal */
 int main()
 {
-    Lista *lista = criarLista();
-    if (lista == NULL)
+    Lista *lista = NULL;
+    int opcao;
+
+    do
     {
-        printf("Erro ao criar a lista.\n");
-        return 1; // Retorna erro se a lista nao for criada OBS: retorno diferente de 0 geralmente sinaliza uma falha.
-    }
+        printf("\n=== Menu de Operacoes da Lista ===\n");
+        printf("1. Criar lista\n");
+        printf("2. Inserir viagem\n");
+        printf("3. Remover viagem\n");
+        printf("4. Buscar viagem\n");
+        printf("5. Mostrar viagens\n");
+        printf("6. Atualizar viagem\n");
+        printf("7. Excluir lista\n");
+        printf("8. Salvar dados\n");
+        printf("9. Sair\n");
+        printf("Escolha uma opcao: ");
+        scanf("%d", &opcao);
 
-    /* Carregar dados do arquivo */
-    printf("Carregando dados do arquivo...\n");
-    carregarDados(lista);
+        // Aqui vai o menu com switch case:
+        switch (opcao)
+        {
+        case 1:
+        {
+            if (lista != NULL)
+            {
+                printf("Lista ja existe!\n");
+            }
+            else
+            {
+                lista = criarLista();
+                if (lista != NULL)
+                {
+                    printf("Lista criada com sucesso!\n");
+                    carregarDados(lista);
+                }
+            }
+            break;
+        }
+        case 2:
+        {
+            if (lista == NULL)
+            {
+                printf("Crie a lista primeiro!\n");
+                break;
+            }
+            Pacote novoPacote;
+            printf("Digite o ID do pacote: ");
+            scanf("%d", &novoPacote.id);
+            getchar(); // Limpa o buffer do \n
+            printf("Digite o destino: ");
+            fgets(novoPacote.destino, 49, stdin);
+            // Remove o \n do final da string
+            novoPacote.destino[strcspn(novoPacote.destino, "\n")] = '\0';
+            
+            printf("Digite o preco: ");
+            scanf("%f", &novoPacote.precoPacote);
+            printf("Digite a duracao (dias): ");
+            scanf("%d", &novoPacote.duracaoDias);
+            printf("Digite o tipo de transporte (A/B): ");
+            scanf(" %c", &novoPacote.tipoTransporte);
 
-    printf("Dados carregados:\n");
-    imprimirElementos(lista); // Verifique se está imprimindo algo
+            if (inserirElemento(lista, novoPacote))
+            {
+                printf("Pacote inserido com sucesso!\n");
+            }
+            break;
+        }
+        case 3:
+        {
+            if (lista == NULL)
+            {
+                printf("Crie a lista primeiro!\n");
+                break;
+            }
+            int id;
+            printf("Digite o ID do pacote a ser removido: ");
+            scanf("%d", &id);
+            if (removerElemento(lista, id))
+            {
+                printf("Pacote removido com sucesso!\n");
+            }
+            break;
+        }
+        case 4:
+        {
+            if (lista == NULL)
+            {
+                printf("Crie a lista primeiro!\n");
+                break;
+            }
+            int id;
+            printf("Digite o ID do pacote a ser buscado: ");
+            scanf("%d", &id);
+            int index = buscarElemento(lista, id);
+            if (index != -1)
+            {
+                Pacote p = lista->elementos[index];
+                printf("Pacote encontrado:\n");
+                printf("ID: %d, Destino: %s, Preco: %.2f, Duracao: %d dias, Transporte: %c\n",
+                       p.id, p.destino, p.precoPacote, p.duracaoDias, p.tipoTransporte);
+            }
+            break;
+        }
+        case 5:
+        {
+            if (lista == NULL)
+            {
+                printf("Crie a lista primeiro!\n");
+                break;
+            }
+            imprimirElementos(lista);
+            break;
+        }
+        case 6:
+        {
+            if (lista == NULL)
+            {
+                printf("Crie a lista primeiro!\n");
+                break;
+            }
+            Pacote pacoteAtualizado;
+            printf("Digite o ID do pacote a ser atualizado: ");
+            scanf("%d", &pacoteAtualizado.id);
+            getchar(); // Limpa o buffer do \n
+            printf("Digite o novo destino: ");
+            fgets(pacoteAtualizado.destino, 49, stdin);
+            // Remove o \n do final da string
+            pacoteAtualizado.destino[strcspn(pacoteAtualizado.destino, "\n")] = '\0';
+            
+            printf("Digite o novo preco: ");
+            scanf("%f", &pacoteAtualizado.precoPacote);
+            printf("Digite a nova duracao (dias): ");
+            scanf("%d", &pacoteAtualizado.duracaoDias);
+            printf("Digite o novo tipo de transporte (A/B): ");
+            scanf(" %c", &pacoteAtualizado.tipoTransporte);
 
-    /* Insercao dos pacotes de viagem */
-    printf("Inserindo pacotes...\n");
-    Pacote p1 = {1, "Paris", 3500.00, 7, 'A'};
-    Pacote p2 = {2, "Rio_de_Janeiro", 1500.00, 5, 'B'};
-    Pacote p3 = {3, "Londres", 2000.00, 3, 'A'};
-    Pacote p4 = {4, "Amsterda", 2500.00, 4, 'B'};
-    Pacote p5 = {5, "Barcelona", 3000.00, 6, 'A'};
-
-    // É aq onde o usuario vai fazer as acoes: inserir, atualizar, remover, ... os pacotes
-
-    inserirElemento(lista, p1);
-    inserirElemento(lista, p2);
-    inserirElemento(lista, p3);
-    inserirElemento(lista, p4);
-    inserirElemento(lista, p5);
-
-    buscarElemento(lista, 2);
-
-    printf("Imprimindo elementos apos insercao:\n");
-    imprimirElementos(lista);
-
-    removerElemento(lista, 1); // Exemplo de remocao de um pacote
-    removerElemento(lista, 5);
-    printf("Imprimindo elementos apos remocao:\n");
-    imprimirElementos(lista);
-
-    /* Atualizar um pacote */
-    printf("Atualizando pacote com ID 2 (Rio_de_Janeiro)...\n");
-    Pacote p_atualizado = {2, "Rio_de_Janeiro", 1800.00, 6, 'A'};
-    atualizarElemento(lista, 2, p_atualizado);
-
-    printf("Imprimindo elementos apos atualizacao:\n");
-    imprimirElementos(lista);
-
-    /* Salvar dados no arquivo txt */
-    printf("Salvando dados no arquivo...\n");
-    salvarDados(lista);
-
-    lista = excluirLista(lista);
-    if (lista == NULL)
-    {
-        printf("Lista excluida com sucesso.\n");
-    }
+            if (atualizarElemento(lista, pacoteAtualizado.id, pacoteAtualizado))
+            {
+                printf("Pacote atualizado com sucesso!\n");
+            }
+            break;
+        }
+        case 7:
+        {
+            if (lista == NULL)
+            {
+                printf("Lista ja esta vazia!\n");
+            }
+            else
+            {
+                salvarDados(lista);
+                lista = excluirLista(lista);
+                printf("Lista excluida com sucesso!\n");
+            }
+            break;
+        }
+        case 8:
+        {
+            if (lista == NULL)
+            {
+                printf("Crie a lista primeiro!\n");
+                break;
+            }
+            salvarDados(lista);
+            printf("Dados salvos com sucesso!\n");
+            break;
+        }
+        case 9:
+            if (lista != NULL)
+            {
+                salvarDados(lista);
+                lista = excluirLista(lista);
+            }
+            printf("Programa encerrado!\n");
+            break;
+        default:
+            printf("Opcao invalida!\n");
+        }
+    } while (opcao != 9);
 
     return 0;
 }
@@ -220,20 +341,28 @@ int removerElemento(Lista *lista, int id)
 /* Funcao para carregar dados do arquivo */
 void carregarDados(Lista *lista)
 {
-    FILE *file = fopen("D:\\GitHub Desktop\\C_CodeLab\\FICR_Atividades_&_Trabalhos\\Mayrton(DataStructure)\\pacoteViagens1\\pacotes.txt", "r"); // caminho no meu computador
+    FILE *file = fopen("D:\\GitHub Desktop\\C_CodeLab\\FICR_Atividades_&_Trabalhos\\Mayrton(DataStructure)\\pacoteViagens1\\pacotes.txt", "r");
     if (file == NULL)
-        // OBS: deve se usar \\ para o C vai interpretar como se fosse 1 barra "\", pois uma só barra é usada para "\n"
-        if (file == NULL)
-        {
-            printf("Erro ao abrir arquivo.\n");
-            return;
-        }
+    {
+        printf("Erro ao abrir arquivo.\n");
+        return;
+    }
 
     Pacote p;
-    while (fscanf(file, "%d %49s %f %d %c", &p.id, p.destino, &p.precoPacote, // OBS: %49s: Lê uma string (até 49 caracteres) e a armazena em p.destino. O limite de 49 garante que nao ocorra overflow no buffer.
-                  &p.duracaoDias, &p.tipoTransporte) != EOF)
+    char linha[256];
+    while (fgets(linha, sizeof(linha), file) != NULL)
     {
-        inserirElemento(lista, p);
+        // Extrair informações usando sscanf
+        if (sscanf(linha, "ID: %d | Destino: %[^|] | Preco: R$ %f | Duracao: %d dias | Transporte: %c",
+                   &p.id, p.destino, &p.precoPacote, &p.duracaoDias, &p.tipoTransporte) == 5)
+        {
+            // Remove espaços em branco no final do destino
+            char *end = p.destino + strlen(p.destino) - 1;
+            while (end > p.destino && isspace(*end)) end--;
+            *(end + 1) = '\0';
+            
+            inserirElemento(lista, p);
+        }
     }
     fclose(file);
 }
@@ -241,7 +370,7 @@ void carregarDados(Lista *lista)
 /* Funcao para salvar dados no arquivo */
 void salvarDados(Lista *lista)
 {
-    FILE *file = fopen("D:\\GitHub Desktop\\C_CodeLab\\FICR_Atividades_&_Trabalhos\\Mayrton(DataStructure)\\pacoteViagens1\\pacotes.txt", "w"); // caminho no meu computador
+    FILE *file = fopen("D:\\GitHub Desktop\\C_CodeLab\\FICR_Atividades_&_Trabalhos\\Mayrton(DataStructure)\\pacoteViagens1\\pacotes.txt", "w");
     if (file == NULL)
     {
         printf("Erro ao salvar arquivo.\n");
@@ -251,7 +380,16 @@ void salvarDados(Lista *lista)
     for (int i = 0; i < lista->tamanho; ++i)
     {
         Pacote p = lista->elementos[i];
-        fprintf(file, "%d %s %.2f %d %c\n", p.id, p.destino, p.precoPacote, p.duracaoDias, p.tipoTransporte);
+        char tipoTransporteStr[10];
+        if (p.tipoTransporte == 'A' || p.tipoTransporte == 'a')
+            strcpy(tipoTransporteStr, "(Aviao)");
+        else if (p.tipoTransporte == 'B' || p.tipoTransporte == 'b')
+            strcpy(tipoTransporteStr, "(Onibus)");
+        else
+            strcpy(tipoTransporteStr, "(N/A)");
+
+        fprintf(file, "ID: %d | Destino: %s | Preco: R$ %.2f | Duracao: %d dias | Transporte: %c %s\n", 
+               p.id, p.destino, p.precoPacote, p.duracaoDias, p.tipoTransporte, tipoTransporteStr);
     }
     fclose(file);
 }

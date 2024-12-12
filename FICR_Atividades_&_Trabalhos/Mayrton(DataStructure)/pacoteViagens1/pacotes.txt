@@ -1,3 +1,1 @@
-2 Rio_de_Janeiro 1800.00 6 A
-3 Londres 2000.00 3 A
-4 Amsterda 2500.00 4 B
+ID: 10 | Destino: Rio Grande do Sul | Preco: R$ 3550.00 | Duracao: 11 dias | Transporte: A (Aviao)
