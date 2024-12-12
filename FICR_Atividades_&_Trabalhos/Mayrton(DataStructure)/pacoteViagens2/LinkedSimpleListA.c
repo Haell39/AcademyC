@@ -441,11 +441,6 @@ int carregarLista(Lista *lista)
                    &pacote->id, pacote->destino, &pacote->precoPacote,
                    &pacote->duracaoDias, &pacote->tipoTransporte) == 5)
         {
-            // Remove espaços em branco no final do destino
-            char *end = pacote->destino + strlen(pacote->destino) - 1;
-            while (end > pacote->destino && isspace(*end)) end--;
-            *(end + 1) = '\0';
-            
             inserirPacote(lista, pacote);
         }
         free(pacote);

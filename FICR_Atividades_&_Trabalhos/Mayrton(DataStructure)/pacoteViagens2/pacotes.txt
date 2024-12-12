@@ -1,1 +1,2 @@
-ID: 2 | Destino: Rio grande do norte | Preco: R$ 3735.00 | Duracao: 27 dias | Transporte: B (Onibus)
+ID: 2 | Destino: Rio grande do norte  | Preco: R$ 3735.00 | Duracao: 27 dias | Transporte: B (Onibus)
+ID: 3 | Destino: Natal Grande | Preco: R$ 1450.00 | Duracao: 45 dias | Transporte: A (Aviao)
