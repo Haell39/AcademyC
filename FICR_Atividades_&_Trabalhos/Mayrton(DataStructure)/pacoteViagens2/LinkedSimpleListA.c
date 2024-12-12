@@ -272,7 +272,7 @@ int salvarLista(Lista *lista)
         return 0;
     }
 
-    FILE *arquivo = fopen("D:\\GitHub Desktop\\C_CodeLab\\pacoteViagens2\\pacotes.txt", "w");
+    FILE *arquivo = fopen("D:\\GitHub Desktop\\C_CodeLab\\FICR_Atividades_&_Trabalhos\\Mayrton(DataStructure)\\pacoteViagens2\\pacotes.txt", "w");
 
     if (arquivo == NULL)
     {
@@ -306,7 +306,7 @@ int carregarLista(Lista *lista)
         return 0;
     }
 
-    FILE *arquivo = fopen("D:\\GitHub Desktop\\C_CodeLab\\pacoteViagens2\\pacotes.txt", "r");
+    FILE *arquivo = fopen("D:\\GitHub Desktop\\C_CodeLab\\FICR_Atividades_&_Trabalhos\\Mayrton(DataStructure)\\pacoteViagens2\\pacotes.txt", "r");
 
     if (arquivo == NULL)
     {

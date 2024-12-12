@@ -220,7 +220,7 @@ int removerElemento(Lista *lista, int id)
 /* Funcao para carregar dados do arquivo */
 void carregarDados(Lista *lista)
 {
-    FILE *file = fopen("D:\\GitHub Desktop\\C_CodeLab\\College\\ListaVetor\\BancoDados.txt", "r"); // caminho no meu computador
+    FILE *file = fopen("D:\\GitHub Desktop\\C_CodeLab\\FICR_Atividades_&_Trabalhos\\Mayrton(DataStructure)\\pacoteViagens1\\pacotes.txt", "r"); // caminho no meu computador
     if (file == NULL)
         // OBS: deve se usar \\ para o C vai interpretar como se fosse 1 barra "\", pois uma só barra é usada para "\n"
         if (file == NULL)
@@ -241,7 +241,7 @@ void carregarDados(Lista *lista)
 /* Funcao para salvar dados no arquivo */
 void salvarDados(Lista *lista)
 {
-    FILE *file = fopen("D:\\GitHub Desktop\\C_CodeLab\\College\\ListaVetor\\BancoDados.txt", "w"); // caminho no meu computador
+    FILE *file = fopen("D:\\GitHub Desktop\\C_CodeLab\\FICR_Atividades_&_Trabalhos\\Mayrton(DataStructure)\\pacoteViagens1\\pacotes.txt", "w"); // caminho no meu computador
     if (file == NULL)
     {
         printf("Erro ao salvar arquivo.\n");
