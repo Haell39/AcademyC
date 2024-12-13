@@ -11,7 +11,7 @@
  *            atualizar elementos,                                *
  *            excluir lista.                                      *
  * Autor: Rafael Andrade                                          *
- * Ultima alteracao: 19/10/2024                                   *
+ * Ultima alteracao: 13/12/2024                                   *
  ******************************************************************/
 
 // ** OBS: Tirei todos os caracteres especiais e acentos para nao dar conflito com o compilador do C
@@ -22,7 +22,7 @@
 
 #define TAM 5 // Define o tamanho
 
-/* Definicao da estrutura para Pacote de Viagem */
+/* Aq é a definicao da estrutura para Pacote de Viagem */
 typedef struct
 {
     int id;
@@ -32,14 +32,14 @@ typedef struct
     char tipoTransporte;
 } Pacote;
 
-/* Definicao da estrutura da Lista */
+/* Agora definindo a estrutura da Lista */
 typedef struct
 {
     int tamanho;       // Quantidade de pacotes na lista
     Pacote *elementos; // Vetor de Pacotes
 } Lista;
 
-/* Funcões implementadas */
+/* Funcões implementadas listadas aq abaixo */
 int atualizarElemento(Lista *, int, Pacote);
 int buscarElemento(Lista *, int);
 Lista *criarLista();
