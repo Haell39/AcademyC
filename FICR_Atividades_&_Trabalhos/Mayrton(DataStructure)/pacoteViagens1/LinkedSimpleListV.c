@@ -106,7 +106,7 @@ int main()
             fgets(novoPacote.destino, 49, stdin);
             // Remove o \n do final da string
             novoPacote.destino[strcspn(novoPacote.destino, "\n")] = '\0';
-            
+
             printf("Digite o preco: ");
             scanf("%f", &novoPacote.precoPacote);
             printf("Digite a duracao (dias): ");
@@ -181,7 +181,7 @@ int main()
             fgets(pacoteAtualizado.destino, 49, stdin);
             // Remove o \n do final da string
             pacoteAtualizado.destino[strcspn(pacoteAtualizado.destino, "\n")] = '\0';
-            
+
             printf("Digite o novo preco: ");
             scanf("%f", &pacoteAtualizado.precoPacote);
             printf("Digite a nova duracao (dias): ");
@@ -358,9 +358,10 @@ void carregarDados(Lista *lista)
         {
             // Remove espaços em branco no final do destino
             char *end = p.destino + strlen(p.destino) - 1;
-            while (end > p.destino && isspace(*end)) end--;
+            while (end > p.destino && isspace(*end))
+                end--;
             *(end + 1) = '\0';
-            
+
             inserirElemento(lista, p);
         }
     }
@@ -388,8 +389,8 @@ void salvarDados(Lista *lista)
         else
             strcpy(tipoTransporteStr, "(N/A)");
 
-        fprintf(file, "ID: %d | Destino: %s | Preco: R$ %.2f | Duracao: %d dias | Transporte: %c %s\n", 
-               p.id, p.destino, p.precoPacote, p.duracaoDias, p.tipoTransporte, tipoTransporteStr);
+        fprintf(file, "ID: %d | Destino: %s | Preco: R$ %.2f | Duracao: %d dias | Transporte: %c %s\n",
+                p.id, p.destino, p.precoPacote, p.duracaoDias, p.tipoTransporte, tipoTransporteStr);
     }
     fclose(file);
 }
