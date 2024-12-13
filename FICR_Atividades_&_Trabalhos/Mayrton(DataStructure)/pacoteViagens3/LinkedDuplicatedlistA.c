@@ -64,45 +64,51 @@ int main() {
             case 1: /*Inserir Pacotes*/
                 printf("\n---Inserir Pacote---\n");
                 printf("|ID: ");
-                scanf("%d",&pacote.id);
+                scanf("%d", &pacote.id);
+                getchar(); // Limpa o buffer do \n
                 printf("|Destino: ");
-                scanf("%s",pacote.destino);
+                fgets(pacote.destino, 49, stdin);
+                pacote.destino[strcspn(pacote.destino, "\n")] = '\0';
                 printf("|Preco do Pacote: ");
-                scanf("%f",&pacote.precoPacote);
+                scanf("%f", &pacote.precoPacote);
                 printf("|Duracao (dias): ");
-                scanf("%d",&pacote.duracaoDias);
+                scanf("%d", &pacote.duracaoDias);
                 printf("|Tipo de Transporte (A-Aviao, B-Onibus): ");
-                scanf(" %c",&pacote.tipoTransporte);
+                scanf(" %c", &pacote.tipoTransporte);
                 InserirPacote(lista, pacote);
                 break;
 
             case 2: /*Inserir Pacote no Início*/
                 printf("\n---Inserir Pacote no Inicio---\n");
                 printf("|ID: ");
-                scanf("%d",&pacote.id);
+                scanf("%d", &pacote.id);
+                getchar(); // Limpa o buffer do \n
                 printf("|Destino: ");
-                scanf("%s",pacote.destino);
+                fgets(pacote.destino, 49, stdin);
+                pacote.destino[strcspn(pacote.destino, "\n")] = '\0';
                 printf("|Preco do Pacote: ");
-                scanf("%f",&pacote.precoPacote);
+                scanf("%f", &pacote.precoPacote);
                 printf("|Duracao (dias): ");
-                scanf("%d",&pacote.duracaoDias);
+                scanf("%d", &pacote.duracaoDias);
                 printf("|Tipo de Transporte (A-Aviao, B-Onibus): ");
-                scanf(" %c",&pacote.tipoTransporte);
+                scanf(" %c", &pacote.tipoTransporte);
                 InserirPacoteInicio(lista, pacote);
                 break;
 
             case 3: /*Inserir Pacote no ID Específico*/
                 printf("\n---Inserir Pacote no ID Especifico---\n");
                 printf("|ID: ");
-                scanf("%d",&pacote.id);
+                scanf("%d", &pacote.id);
+                getchar(); // Limpa o buffer do \n
                 printf("|Destino: ");
-                scanf("%s",pacote.destino);
+                fgets(pacote.destino, 49, stdin);
+                pacote.destino[strcspn(pacote.destino, "\n")] = '\0';
                 printf("|Preco do Pacote: ");
-                scanf("%f",&pacote.precoPacote);
+                scanf("%f", &pacote.precoPacote);
                 printf("|Duracao (dias): ");
-                scanf("%d",&pacote.duracaoDias);
+                scanf("%d", &pacote.duracaoDias);
                 printf("|Tipo de Transporte (A-Aviao, B-Onibus): ");
-                scanf(" %c",&pacote.tipoTransporte);
+                scanf(" %c", &pacote.tipoTransporte);
                 if (InserirPacoteID(lista, pacote)) {
                     printf("Pacote inserido com sucesso!\n");
                 } else {
@@ -148,14 +154,16 @@ int main() {
                 printf("\n---Atualizar Pacotes---\n");
                 printf("Digite o ID do pacote: ");
                 scanf("%d", &pacote.id);
+                getchar(); // Limpa o buffer do \n
                 printf("|Destino: ");
-                scanf("%s",pacote.destino);
+                fgets(pacote.destino, 49, stdin);
+                pacote.destino[strcspn(pacote.destino, "\n")] = '\0';
                 printf("|Preco do Pacote: ");
-                scanf("%f",&pacote.precoPacote);
+                scanf("%f", &pacote.precoPacote);
                 printf("|Duracao (dias): ");
-                scanf("%d",&pacote.duracaoDias);
+                scanf("%d", &pacote.duracaoDias);
                 printf("|Tipo de Transporte (A-Aviao, B-Onibus): ");
-                scanf(" %c",&pacote.tipoTransporte);
+                scanf(" %c", &pacote.tipoTransporte);
                 if (AtualizarPacotes(lista, pacote.id, pacote)) {
                     printf("Pacote atualizado com sucesso!\n");
                 } else {
@@ -445,13 +453,14 @@ int RemoverPacote(Lista *lista, int id) {
     return 0;
 }
 
+/* Função para salvar dados */
 void SalvarDados(Lista *lista, const char *nomeArquivo) {
     if (lista == NULL || lista->prim == NULL) {
         printf("Lista vazia ou nao criada!\n");
         return;
     }
 
-    FILE *arquivo = fopen(nomeArquivo, "w");
+    FILE *arquivo = fopen("D:\\GitHub Desktop\\C_CodeLab\\FICR_Atividades_&_Trabalhos\\Mayrton(DataStructure)\\pacoteViagens3\\pacotes.txt", "w");
     if (arquivo == NULL) {
         printf("Erro ao abrir arquivo!\n");
         return;
@@ -474,13 +483,14 @@ void SalvarDados(Lista *lista, const char *nomeArquivo) {
     fclose(arquivo);
 }
 
+/* Função para carregar dados */
 void CarregarDados(Lista *lista, const char *nomeArquivo) {
     if (lista == NULL) {
         printf("Lista nao criada!\n");
         return;
     }
 
-    FILE *arquivo = fopen(nomeArquivo, "r");
+    FILE *arquivo = fopen("D:\\GitHub Desktop\\C_CodeLab\\FICR_Atividades_&_Trabalhos\\Mayrton(DataStructure)\\pacoteViagens3\\pacotes.txt", "r");
     if (arquivo == NULL) {
         printf("Arquivo nao encontrado!\n");
         return;
