@@ -1,1 +1,0 @@
-Para tarefas e atividades de mayrton teacher
