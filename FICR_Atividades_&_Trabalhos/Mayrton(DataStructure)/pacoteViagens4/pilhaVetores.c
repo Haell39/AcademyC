@@ -109,7 +109,7 @@ void SalvarDados(Pilha *pilha)
             strcpy(tipoTransporteStr, "(N/A)");
 
         fprintf(file, "ID: %d | Destino: %s | Preco: R$ %.2f | Duracao: %d dias | Transporte: %c %s\n",
-                pacote.id, pacote.destino, pacote.precoPacote, pacote.duracaoDias, 
+                pacote.id, pacote.destino, pacote.precoPacote, pacote.duracaoDias,
                 pacote.tipoTransporte, tipoTransporteStr);
     }
 
@@ -171,9 +171,8 @@ void VerTopo(Pilha *pilha)
     printf("\n|Destino: %s", topo.destino);
     printf("\n|Preco: R$ %.2f", topo.precoPacote);
     printf("\n|Duracao: %d dias", topo.duracaoDias);
-    printf("\n|Transporte: %s\n", 
-        topo.tipoTransporte == 'A' ? "Aviao" : 
-        (topo.tipoTransporte == 'B' ? "Onibus" : "N/A"));
+    printf("\n|Transporte: %s\n",
+           topo.tipoTransporte == 'A' ? "Aviao" : (topo.tipoTransporte == 'B' ? "Onibus" : "N/A"));
 }
 
 /* Função para remover pacotes */
@@ -280,7 +279,8 @@ int main()
         }
     } while (opcao != 0);
 
-    if (minhaPilha != NULL) {
+    if (minhaPilha != NULL)
+    {
         minhaPilha = Excluir(minhaPilha);
     }
     return 0;
