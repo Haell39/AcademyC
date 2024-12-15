@@ -7,11 +7,13 @@
 typedef struct lista Lista;
 typedef struct listaNo ListaNo;
 
-struct lista {
+struct lista
+{
     ListaNo *prim;
 };
 
-struct listaNo {
+struct listaNo
+{
     int id;
     char destino[50];
     float precoPacote;
@@ -22,26 +24,28 @@ struct listaNo {
 };
 
 /* Function Prototypes */
-int AtualizarPacotes(Lista*, int, ListaNo);
-ListaNo* BuscarPacotes(Lista*, int);
-Lista* Criar();
-int InserirPacote(Lista*, ListaNo);
-int InserirPacoteID(Lista*, ListaNo);
-int InserirPacoteInicio(Lista*, ListaNo);
-int Tamanho(Lista*);
+int AtualizarPacotes(Lista *, int, ListaNo);
+ListaNo *BuscarPacotes(Lista *, int);
+Lista *Criar();
+int InserirPacote(Lista *, ListaNo);
+int InserirPacoteID(Lista *, ListaNo);
+int InserirPacoteInicio(Lista *, ListaNo);
+int Tamanho(Lista *);
 void ImprimirPacote(Lista *lista);
-int RemoverPacote(Lista*, int);
-Lista* Excluir(Lista* lista);
+int RemoverPacote(Lista *, int);
+Lista *Excluir(Lista *lista);
 void OrdemInversa(Lista *lista);
 void SalvarDados(Lista *lista, const char *nomeArquivo);
 void CarregarDados(Lista *lista, const char *nomeArquivo);
 
-int main() {
+int main()
+{
     Lista *lista = Criar();
     int opcao;
     ListaNo pacote;
 
-    do {
+    do
+    {
         printf("\n---Menu de Pacotes de Viagem---\n");
         printf("[1] Inserir Pacote\n");
         printf("[2] Inserir Pacote no Inicio\n");
@@ -60,165 +64,179 @@ int main() {
         scanf("%d", &opcao);
         getchar();
 
-        switch (opcao) {
-            case 1: /*Inserir Pacotes*/
-                printf("\n---Inserir Pacote---\n");
-                printf("|ID: ");
-                scanf("%d", &pacote.id);
-                getchar(); // Limpa o buffer do \n
-                printf("|Destino: ");
-                fgets(pacote.destino, 49, stdin);
-                pacote.destino[strcspn(pacote.destino, "\n")] = '\0';
-                printf("|Preco do Pacote: ");
-                scanf("%f", &pacote.precoPacote);
-                printf("|Duracao (dias): ");
-                scanf("%d", &pacote.duracaoDias);
-                printf("|Tipo de Transporte (A-Aviao, B-Onibus): ");
-                scanf(" %c", &pacote.tipoTransporte);
-                InserirPacote(lista, pacote);
-                break;
+        switch (opcao)
+        {
+        case 1: /*Inserir Pacotes*/
+            printf("\n---Inserir Pacote---\n");
+            printf("|ID: ");
+            scanf("%d", &pacote.id);
+            getchar(); // Limpa o buffer do \n
+            printf("|Destino: ");
+            fgets(pacote.destino, 49, stdin);
+            pacote.destino[strcspn(pacote.destino, "\n")] = '\0';
+            printf("|Preco do Pacote: ");
+            scanf("%f", &pacote.precoPacote);
+            printf("|Duracao (dias): ");
+            scanf("%d", &pacote.duracaoDias);
+            printf("|Tipo de Transporte (A-Aviao, B-Onibus): ");
+            scanf(" %c", &pacote.tipoTransporte);
+            InserirPacote(lista, pacote);
+            break;
 
-            case 2: /*Inserir Pacote no Início*/
-                printf("\n---Inserir Pacote no Inicio---\n");
-                printf("|ID: ");
-                scanf("%d", &pacote.id);
-                getchar(); // Limpa o buffer do \n
-                printf("|Destino: ");
-                fgets(pacote.destino, 49, stdin);
-                pacote.destino[strcspn(pacote.destino, "\n")] = '\0';
-                printf("|Preco do Pacote: ");
-                scanf("%f", &pacote.precoPacote);
-                printf("|Duracao (dias): ");
-                scanf("%d", &pacote.duracaoDias);
-                printf("|Tipo de Transporte (A-Aviao, B-Onibus): ");
-                scanf(" %c", &pacote.tipoTransporte);
-                InserirPacoteInicio(lista, pacote);
-                break;
+        case 2: /*Inserir Pacote no Início*/
+            printf("\n---Inserir Pacote no Inicio---\n");
+            printf("|ID: ");
+            scanf("%d", &pacote.id);
+            getchar(); // Limpa o buffer do \n
+            printf("|Destino: ");
+            fgets(pacote.destino, 49, stdin);
+            pacote.destino[strcspn(pacote.destino, "\n")] = '\0';
+            printf("|Preco do Pacote: ");
+            scanf("%f", &pacote.precoPacote);
+            printf("|Duracao (dias): ");
+            scanf("%d", &pacote.duracaoDias);
+            printf("|Tipo de Transporte (A-Aviao, B-Onibus): ");
+            scanf(" %c", &pacote.tipoTransporte);
+            InserirPacoteInicio(lista, pacote);
+            break;
 
-            case 3: /*Inserir Pacote no ID Específico*/
-                printf("\n---Inserir Pacote no ID Especifico---\n");
-                printf("|ID: ");
-                scanf("%d", &pacote.id);
-                getchar(); // Limpa o buffer do \n
-                printf("|Destino: ");
-                fgets(pacote.destino, 49, stdin);
-                pacote.destino[strcspn(pacote.destino, "\n")] = '\0';
-                printf("|Preco do Pacote: ");
-                scanf("%f", &pacote.precoPacote);
-                printf("|Duracao (dias): ");
-                scanf("%d", &pacote.duracaoDias);
-                printf("|Tipo de Transporte (A-Aviao, B-Onibus): ");
-                scanf(" %c", &pacote.tipoTransporte);
-                if (InserirPacoteID(lista, pacote)) {
-                    printf("Pacote inserido com sucesso!\n");
-                } else {
-                    printf("ID ja existe!\n");
-                }
-                break;
+        case 3: /*Inserir Pacote no ID Específico*/
+            printf("\n---Inserir Pacote no ID Especifico---\n");
+            printf("|ID: ");
+            scanf("%d", &pacote.id);
+            getchar(); // Limpa o buffer do \n
+            printf("|Destino: ");
+            fgets(pacote.destino, 49, stdin);
+            pacote.destino[strcspn(pacote.destino, "\n")] = '\0';
+            printf("|Preco do Pacote: ");
+            scanf("%f", &pacote.precoPacote);
+            printf("|Duracao (dias): ");
+            scanf("%d", &pacote.duracaoDias);
+            printf("|Tipo de Transporte (A-Aviao, B-Onibus): ");
+            scanf(" %c", &pacote.tipoTransporte);
+            if (InserirPacoteID(lista, pacote))
+            {
+                printf("Pacote inserido com sucesso!\n");
+            }
+            else
+            {
+                printf("ID ja existe!\n");
+            }
+            break;
 
-            case 4: /*Imprimir Pacotes*/
-                printf("\n---Imprimir Pacotes---\n");
-                ImprimirPacote(lista);
-                break;
+        case 4: /*Imprimir Pacotes*/
+            printf("\n---Imprimir Pacotes---\n");
+            ImprimirPacote(lista);
+            break;
 
-            case 5: /*Buscar Pacotes*/
-                printf("\n---Buscar Pacotes---\n");
-                printf("Digite o ID do pacote: ");
-                scanf("%d", &pacote.id);
-                ListaNo *resultado = BuscarPacotes(lista, pacote.id);
-                if (resultado) {
-                    printf("|ID: %d\n", resultado->id);
-                    printf("|Destino: %s\n", resultado->destino);
-                    printf("|Preco do Pacote: R$%.2f\n", resultado->precoPacote);
-                    printf("|Duracao: %d dias\n", resultado->duracaoDias);
-                    printf("|Tipo de Transporte: %s\n", 
-                        resultado->tipoTransporte == 'A' ? "Aviao" : 
-                        (resultado->tipoTransporte == 'B' ? "Onibus" : "Desconhecido"));
-                } else {
-                    printf("Pacote nao encontrado!\n");
-                }
-                break;
+        case 5: /*Buscar Pacotes*/
+            printf("\n---Buscar Pacotes---\n");
+            printf("Digite o ID do pacote: ");
+            scanf("%d", &pacote.id);
+            ListaNo *resultado = BuscarPacotes(lista, pacote.id);
+            if (resultado)
+            {
+                printf("|ID: %d\n", resultado->id);
+                printf("|Destino: %s\n", resultado->destino);
+                printf("|Preco do Pacote: R$%.2f\n", resultado->precoPacote);
+                printf("|Duracao: %d dias\n", resultado->duracaoDias);
+                printf("|Tipo de Transporte: %s\n",
+                       resultado->tipoTransporte == 'A' ? "Aviao" : (resultado->tipoTransporte == 'B' ? "Onibus" : "Desconhecido"));
+            }
+            else
+            {
+                printf("Pacote nao encontrado!\n");
+            }
+            break;
 
-            case 6: /*Remover Pacotes*/
-                printf("\n---Remover Pacotes---\n");
-                printf("Digite o ID do pacote: ");
-                scanf("%d", &pacote.id);
-                if (RemoverPacote(lista, pacote.id)) {
-                    printf("Pacote removido com sucesso!\n");
-                } else {
-                    printf("Pacote nao encontrado!\n");
-                }
-                break;
+        case 6: /*Remover Pacotes*/
+            printf("\n---Remover Pacotes---\n");
+            printf("Digite o ID do pacote: ");
+            scanf("%d", &pacote.id);
+            if (RemoverPacote(lista, pacote.id))
+            {
+                printf("Pacote removido com sucesso!\n");
+            }
+            else
+            {
+                printf("Pacote nao encontrado!\n");
+            }
+            break;
 
-            case 7: /*Atualizar Pacotes*/
-                printf("\n---Atualizar Pacotes---\n");
-                printf("Digite o ID do pacote: ");
-                scanf("%d", &pacote.id);
-                getchar(); // Limpa o buffer do \n
-                printf("|Destino: ");
-                fgets(pacote.destino, 49, stdin);
-                pacote.destino[strcspn(pacote.destino, "\n")] = '\0';
-                printf("|Preco do Pacote: ");
-                scanf("%f", &pacote.precoPacote);
-                printf("|Duracao (dias): ");
-                scanf("%d", &pacote.duracaoDias);
-                printf("|Tipo de Transporte (A-Aviao, B-Onibus): ");
-                scanf(" %c", &pacote.tipoTransporte);
-                if (AtualizarPacotes(lista, pacote.id, pacote)) {
-                    printf("Pacote atualizado com sucesso!\n");
-                } else {
-                    printf("Pacote nao encontrado!\n");
-                }
-                break;
+        case 7: /*Atualizar Pacotes*/
+            printf("\n---Atualizar Pacotes---\n");
+            printf("Digite o ID do pacote: ");
+            scanf("%d", &pacote.id);
+            getchar(); // Limpa o buffer do \n
+            printf("|Destino: ");
+            fgets(pacote.destino, 49, stdin);
+            pacote.destino[strcspn(pacote.destino, "\n")] = '\0';
+            printf("|Preco do Pacote: ");
+            scanf("%f", &pacote.precoPacote);
+            printf("|Duracao (dias): ");
+            scanf("%d", &pacote.duracaoDias);
+            printf("|Tipo de Transporte (A-Aviao, B-Onibus): ");
+            scanf(" %c", &pacote.tipoTransporte);
+            if (AtualizarPacotes(lista, pacote.id, pacote))
+            {
+                printf("Pacote atualizado com sucesso!\n");
+            }
+            else
+            {
+                printf("Pacote nao encontrado!\n");
+            }
+            break;
 
-            case 8: /*Salvar*/
-                printf("\n---Salvar Pacotes---\n");
-                SalvarDados(lista, "pacotes.txt");
-                printf("Dados salvos com sucesso!\n");
-                break;
+        case 8: /*Salvar*/
+            printf("\n---Salvar Pacotes---\n");
+            SalvarDados(lista, "pacotes.txt");
+            printf("Dados salvos com sucesso!\n");
+            break;
 
-            case 9: /*Carregar*/
-                printf("\n---Carregar Pacotes---\n");
-                CarregarDados(lista, "pacotes.txt");
-                printf("Dados carregados com sucesso!\n");
-                break;
+        case 9: /*Carregar*/
+            printf("\n---Carregar Pacotes---\n");
+            CarregarDados(lista, "pacotes.txt");
+            printf("Dados carregados com sucesso!\n");
+            break;
 
-            case 10: /*Excluir Lista*/
-                printf("\n---Excluir Lista---\n");
-                lista = Excluir(lista);
-                printf("Lista excluida com sucesso!\n");
-                break;
+        case 10: /*Excluir Lista*/
+            printf("\n---Excluir Lista---\n");
+            lista = Excluir(lista);
+            printf("Lista excluida com sucesso!\n");
+            break;
 
-            case 11: /*Imprimir Pacotes Ordem Inversa*/
-                printf("\n---Ordem Inversa---\n");
-                OrdemInversa(lista);
-                break;
+        case 11: /*Imprimir Pacotes Ordem Inversa*/
+            printf("\n---Ordem Inversa---\n");
+            OrdemInversa(lista);
+            break;
 
-            case 12: /*Tamanho da Lista*/
-                printf("\n---Tamanho da Lista---\n");
-                printf("Total de pacotes: %d\n", Tamanho(lista));
-                break;
+        case 12: /*Tamanho da Lista*/
+            printf("\n---Tamanho da Lista---\n");
+            printf("Total de pacotes: %d\n", Tamanho(lista));
+            break;
 
-            case 0: /*Sair*/
-                printf("Saindo...\n");
-                break;
+        case 0: /*Sair*/
+            printf("Saindo...\n");
+            break;
 
-            default:
-                printf("Opcao invalida!\n");
+        default:
+            printf("Opcao invalida!\n");
         }
     } while (opcao != 0);
 
     return 0;
 }
 
-/* Function implementations remain the same as in the original code, 
+/* Function implementations remain the same as in the original code,
    with only variable/struct names changed from 'receita' to 'pacote' */
 
 /* Função para inserir pacote no início */
-int InserirPacoteInicio(Lista *lista, ListaNo valor) {
-    ListaNo *nova = (ListaNo*) malloc(sizeof(ListaNo));
+int InserirPacoteInicio(Lista *lista, ListaNo valor)
+{
+    ListaNo *nova = (ListaNo *)malloc(sizeof(ListaNo));
 
-    if (nova == NULL) {
+    if (nova == NULL)
+    {
         printf("Sem espaco\n");
         return 0;
     }
@@ -227,7 +245,8 @@ int InserirPacoteInicio(Lista *lista, ListaNo valor) {
     nova->prox = lista->prim;
     nova->ant = NULL;
 
-    if (lista->prim != NULL) {
+    if (lista->prim != NULL)
+    {
         lista->prim->ant = nova;
     }
     lista->prim = nova;
@@ -236,10 +255,12 @@ int InserirPacoteInicio(Lista *lista, ListaNo valor) {
 }
 
 /* Função para inserir pacote no ID específico */
-int InserirPacoteID(Lista *lista, ListaNo valor) {
-    ListaNo *nova = (ListaNo*) malloc(sizeof(ListaNo));
+int InserirPacoteID(Lista *lista, ListaNo valor)
+{
+    ListaNo *nova = (ListaNo *)malloc(sizeof(ListaNo));
 
-    if (nova == NULL) {
+    if (nova == NULL)
+    {
         printf("Sem espaco\n");
         return 0;
     }
@@ -248,23 +269,30 @@ int InserirPacoteID(Lista *lista, ListaNo valor) {
     nova->prox = NULL;
     nova->ant = NULL;
 
-    if (lista->prim == NULL) {
+    if (lista->prim == NULL)
+    {
         lista->prim = nova;
         return 1;
     }
 
     ListaNo *p;
-    for (p = lista->prim; p != NULL; p = p->prox) {
-        if (p->id == valor.id) {
+    for (p = lista->prim; p != NULL; p = p->prox)
+    {
+        if (p->id == valor.id)
+        {
             free(nova);
             return 0;
         }
-        if (p->id > valor.id) {
+        if (p->id > valor.id)
+        {
             nova->prox = p;
             nova->ant = p->ant;
-            if (p->ant != NULL) {
+            if (p->ant != NULL)
+            {
                 p->ant->prox = nova;
-            } else {
+            }
+            else
+            {
                 lista->prim = nova;
             }
             p->ant = nova;
@@ -279,15 +307,18 @@ int InserirPacoteID(Lista *lista, ListaNo valor) {
 }
 
 /* Função para calcular o tamanho da lista */
-int Tamanho(Lista *lista) {
+int Tamanho(Lista *lista)
+{
     int count = 0;
     ListaNo *p;
 
-    if (lista == NULL) {
+    if (lista == NULL)
+    {
         return count;
     }
 
-    for (p = lista->prim; p != NULL; p = p->prox) {
+    for (p = lista->prim; p != NULL; p = p->prox)
+    {
         count++;
     }
 
@@ -295,21 +326,26 @@ int Tamanho(Lista *lista) {
 }
 
 /*Função para atualizar pacotes*/
-int AtualizarPacotes(Lista *lista, int busca, ListaNo novoPacote) {
+int AtualizarPacotes(Lista *lista, int busca, ListaNo novoPacote)
+{
     ListaNo *p;
 
-    if (lista == NULL) {
+    if (lista == NULL)
+    {
         printf("A lista nao foi criada!\n");
         return 0;
     }
 
-    if (lista->prim == NULL) {
+    if (lista->prim == NULL)
+    {
         printf("A lista esta vazia!\n");
         return 0;
     }
 
-    for (p = lista->prim; p != NULL; p = p->prox) {
-        if (p->id == busca) {
+    for (p = lista->prim; p != NULL; p = p->prox)
+    {
+        if (p->id == busca)
+        {
             *p = novoPacote;
             return 1;
         }
@@ -318,21 +354,26 @@ int AtualizarPacotes(Lista *lista, int busca, ListaNo novoPacote) {
 }
 
 /*Função para buscar pacotes*/
-ListaNo* BuscarPacotes(Lista *lista, int valor) {
+ListaNo *BuscarPacotes(Lista *lista, int valor)
+{
     ListaNo *p;
-    
-    if (lista == NULL) {
+
+    if (lista == NULL)
+    {
         printf("A lista nao foi criada!\n");
         return NULL;
     }
 
-    if (lista->prim == NULL) {
+    if (lista->prim == NULL)
+    {
         printf("A lista esta vazia!\n");
         return NULL;
     }
 
-    for (p = lista->prim; p != NULL; p = p->prox) {
-        if (p->id == valor) {
+    for (p = lista->prim; p != NULL; p = p->prox)
+    {
+        if (p->id == valor)
+        {
             return p;
         }
     }
@@ -340,10 +381,12 @@ ListaNo* BuscarPacotes(Lista *lista, int valor) {
 }
 
 /* Função para criar uma lista*/
-Lista* Criar() {
-    Lista *nova = (Lista*)malloc(sizeof(Lista));
-    
-    if (nova == NULL) {
+Lista *Criar()
+{
+    Lista *nova = (Lista *)malloc(sizeof(Lista));
+
+    if (nova == NULL)
+    {
         printf("Sem espaco!\n");
         return NULL;
     }
@@ -353,30 +396,35 @@ Lista* Criar() {
 }
 
 /* Função para excluir uma lista*/
-Lista* Excluir(Lista* lista) {
+Lista *Excluir(Lista *lista)
+{
     ListaNo *aux;
 
-    if (lista == NULL) {
+    if (lista == NULL)
+    {
         printf("A lista nao foi criada!\n");
         return NULL;
     }
 
-    while (lista->prim != NULL) {
+    while (lista->prim != NULL)
+    {
         aux = lista->prim;
         lista->prim = lista->prim->prox;
         free(aux);
     }
 
     free(lista);
-    
+
     return NULL;
 }
 
 /* Função Para inserir Pacotes*/
-int InserirPacote(Lista *lista, ListaNo valor) {
-    ListaNo *nova = (ListaNo*) malloc(sizeof(ListaNo));
+int InserirPacote(Lista *lista, ListaNo valor)
+{
+    ListaNo *nova = (ListaNo *)malloc(sizeof(ListaNo));
 
-    if (nova == NULL) {
+    if (nova == NULL)
+    {
         printf("Sem espaco\n");
         return 0;
     }
@@ -385,14 +433,16 @@ int InserirPacote(Lista *lista, ListaNo valor) {
     nova->prox = NULL;
     nova->ant = NULL;
 
-    if (lista->prim == NULL) {
+    if (lista->prim == NULL)
+    {
         lista->prim = nova;
         return 1;
     }
 
     ListaNo *p;
-    for (p = lista->prim; p->prox != NULL; p = p->prox);
-    
+    for (p = lista->prim; p->prox != NULL; p = p->prox)
+        ;
+
     p->prox = nova;
     nova->ant = p;
 
@@ -400,48 +450,60 @@ int InserirPacote(Lista *lista, ListaNo valor) {
 }
 
 /*Função para imprimir os pacotes*/
-void ImprimirPacote(Lista *lista) {
+void ImprimirPacote(Lista *lista)
+{
     ListaNo *p;
 
-    if (lista == NULL) {
+    if (lista == NULL)
+    {
         printf("A lista nao foi criada!\n");
         return;
     }
 
-    if (lista->prim == NULL) {
+    if (lista->prim == NULL)
+    {
         printf("A lista esta vazia!\n");
         return;
     }
 
-    for (p = lista->prim; p != NULL; p = p->prox) {
+    for (p = lista->prim; p != NULL; p = p->prox)
+    {
         printf("|ID: %d\n", p->id);
         printf("|Destino: %s\n", p->destino);
         printf("|Preco do Pacote: R$%.2f\n", p->precoPacote);
         printf("|Duracao: %d dias\n", p->duracaoDias);
-        printf("|Tipo de Transporte: %s\n\n", 
-            p->tipoTransporte == 'A' ? "Aviao" : 
-            (p->tipoTransporte == 'B' ? "Onibus" : "Desconhecido"));
+        printf("|Tipo de Transporte: %s\n\n",
+               p->tipoTransporte == 'A' ? "Aviao" : (p->tipoTransporte == 'B' ? "Onibus" : "Desconhecido"));
     }
 }
 
-int RemoverPacote(Lista *lista, int id) {
-    if (lista == NULL || lista->prim == NULL) {
+int RemoverPacote(Lista *lista, int id)
+{
+    if (lista == NULL || lista->prim == NULL)
+    {
         printf("Lista vazia ou nao criada!\n");
         return 0;
     }
 
     ListaNo *p = lista->prim;
 
-    while (p != NULL) {
-        if (p->id == id) {
-            if (p->ant == NULL) { // É o primeiro nó
+    while (p != NULL)
+    {
+        if (p->id == id)
+        {
+            if (p->ant == NULL)
+            { // É o primeiro nó
                 lista->prim = p->prox;
-                if (lista->prim != NULL) {
+                if (lista->prim != NULL)
+                {
                     lista->prim->ant = NULL;
                 }
-            } else {
+            }
+            else
+            {
                 p->ant->prox = p->prox;
-                if (p->prox != NULL) {
+                if (p->prox != NULL)
+                {
                     p->prox->ant = p->ant;
                 }
             }
@@ -454,20 +516,24 @@ int RemoverPacote(Lista *lista, int id) {
 }
 
 /* Função para salvar dados */
-void SalvarDados(Lista *lista, const char *nomeArquivo) {
-    if (lista == NULL || lista->prim == NULL) {
+void SalvarDados(Lista *lista, const char *nomeArquivo)
+{
+    if (lista == NULL || lista->prim == NULL)
+    {
         printf("Lista vazia ou nao criada!\n");
         return;
     }
 
     FILE *arquivo = fopen("D:\\GitHub Desktop\\C_CodeLab\\FICR_Atividades_&_Trabalhos\\Mayrton(DataStructure)\\pacoteViagens3\\pacotes.txt", "w");
-    if (arquivo == NULL) {
+    if (arquivo == NULL)
+    {
         printf("Erro ao abrir arquivo!\n");
         return;
     }
 
     ListaNo *p;
-    for (p = lista->prim; p != NULL; p = p->prox) {
+    for (p = lista->prim; p != NULL; p = p->prox)
+    {
         char tipoTransporteStr[10];
         if (p->tipoTransporte == 'A' || p->tipoTransporte == 'a')
             strcpy(tipoTransporteStr, "(Aviao)");
@@ -484,24 +550,29 @@ void SalvarDados(Lista *lista, const char *nomeArquivo) {
 }
 
 /* Função para carregar dados */
-void CarregarDados(Lista *lista, const char *nomeArquivo) {
-    if (lista == NULL) {
+void CarregarDados(Lista *lista, const char *nomeArquivo)
+{
+    if (lista == NULL)
+    {
         printf("Lista nao criada!\n");
         return;
     }
 
     FILE *arquivo = fopen("D:\\GitHub Desktop\\C_CodeLab\\FICR_Atividades_&_Trabalhos\\Mayrton(DataStructure)\\pacoteViagens3\\pacotes.txt", "r");
-    if (arquivo == NULL) {
+    if (arquivo == NULL)
+    {
         printf("Arquivo nao encontrado!\n");
         return;
     }
 
     char linha[256];
-    while (fgets(linha, sizeof(linha), arquivo) != NULL) {
+    while (fgets(linha, sizeof(linha), arquivo) != NULL)
+    {
         ListaNo pacote;
         if (sscanf(linha, "ID: %d | Destino: %[^|] | Preco: R$ %f | Duracao: %d dias | Transporte: %c",
                    &pacote.id, pacote.destino, &pacote.precoPacote,
-                   &pacote.duracaoDias, &pacote.tipoTransporte) == 5) {
+                   &pacote.duracaoDias, &pacote.tipoTransporte) == 5)
+        {
             InserirPacote(lista, pacote);
         }
     }
@@ -510,31 +581,35 @@ void CarregarDados(Lista *lista, const char *nomeArquivo) {
 }
 
 /*Função para imprimir os pacotes na ordem inversa*/
-void OrdemInversa(Lista *lista) {
+void OrdemInversa(Lista *lista)
+{
     ListaNo *p;
 
-    if (lista == NULL) {
+    if (lista == NULL)
+    {
         printf("A lista nao foi criada!\n");
         return;
     }
 
-    if (lista->prim == NULL) {
+    if (lista->prim == NULL)
+    {
         printf("A lista esta vazia!\n");
         return;
     }
 
     // Vai até o último nó
-    for (p = lista->prim; p->prox != NULL; p = p->prox);
+    for (p = lista->prim; p->prox != NULL; p = p->prox)
+        ;
 
     // Imprime do último ao primeiro
-    while (p != NULL) {
+    while (p != NULL)
+    {
         printf("|ID: %d\n", p->id);
         printf("|Destino: %s\n", p->destino);
         printf("|Preco do Pacote: R$%.2f\n", p->precoPacote);
         printf("|Duracao: %d dias\n", p->duracaoDias);
-        printf("|Tipo de Transporte: %s\n\n", 
-            p->tipoTransporte == 'A' ? "Aviao" : 
-            (p->tipoTransporte == 'B' ? "Onibus" : "Desconhecido"));
+        printf("|Tipo de Transporte: %s\n\n",
+               p->tipoTransporte == 'A' ? "Aviao" : (p->tipoTransporte == 'B' ? "Onibus" : "Desconhecido"));
         p = p->ant;
     }
 }

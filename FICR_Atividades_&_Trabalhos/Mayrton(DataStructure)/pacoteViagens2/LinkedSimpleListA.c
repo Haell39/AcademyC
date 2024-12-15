@@ -2,450 +2,444 @@
 #include <stdlib.h>
 #include <string.h>
 
-/* Definicao da estrutura para Pacote de Viagem */
-typedef struct pacote
+// Definicao da estrutura do pacote
+typedef struct Pacote
 {
     int id;
-    char destino[50];
-    float precoPacote;
-    int duracaoDias;
-    char tipoTransporte;
+    char destino[100];
+    float preco;
+    int dias;
+    char tipoTransporte[20];
+    struct Pacote *proximo;
 } Pacote;
 
-/* ^^ Aqui é a estrutura do nó da lista */
-typedef struct listaNo
+// Protótipos das funcões
+Pacote *criarLista();
+void inserirInicio(Pacote **lista);
+void inserirFinal(Pacote **lista);
+void mostrarLista(Pacote *lista);
+void buscarPacote(Pacote *lista);
+void atualizar(Pacote **lista);
+void excluirPacote(Pacote **lista);
+void excluirLista(Pacote **lista);
+int tamanho(Pacote *lista);
+void carregarDados(Pacote **lista);
+void salvarDados(Pacote *lista);
+
+// Funcao para criar lista vazia
+Pacote *criarLista()
 {
-    Pacote *pacote;
-    struct listaNo *prox;
-} ListaNo;
-
-typedef struct lista
-{
-    ListaNo *prim;
-} Lista;
-
-/* ^^ ^^ Aqui sao as funcões da lista */
-int atualizarPacote(Lista *, int, Pacote *);
-ListaNo *buscarPacote(Lista *, int);
-Lista *criarLista();
-int inserirPacote(Lista *, Pacote *);
-void imprimirPacotes(Lista *);
-int removerPacote(Lista *, int);
-Lista *excluirLista(Lista *);
-int salvarLista(Lista *);
-int carregarLista(Lista *);
-
-int main()
-{
-    Lista *lista = NULL;
-    int opcao;
-    // Um while com switch pro menu:
-    do {
-        printf("\n=== Menu de Operacoes da Lista ===\n");
-        printf("1. Criar lista\n");
-        printf("2. Inserir viagem\n");
-        printf("3. Remover viagem\n");
-        printf("4. Buscar viagem\n");
-        printf("5. Mostrar viagens\n");
-        printf("6. Atualizar viagem\n");
-        printf("7. Excluir lista\n");
-        printf("8. Salvar dados\n");
-        printf("9. Sair\n");
-        printf("Escolha uma opcao: ");
-        scanf("%d", &opcao);
-
-        switch(opcao) {
-            case 1: {
-                if (lista != NULL) {
-                    printf("Lista ja existe!\n");
-                } else {
-                    lista = criarLista();
-                    if (lista != NULL) {
-                        printf("Lista criada com sucesso!\n");
-                        carregarLista(lista);
-                    }
-                }
-                break;
-            }
-            case 2: {
-                if (lista == NULL) {
-                    printf("Crie a lista primeiro!\n");
-                    break;
-                }
-                Pacote novoPacote;
-                printf("Digite o ID do pacote: ");
-                scanf("%d", &novoPacote.id);
-                getchar(); // Limpa o buffer do \n
-                printf("Digite o destino: ");
-                fgets(novoPacote.destino, 49, stdin);
-                novoPacote.destino[strcspn(novoPacote.destino, "\n")] = '\0';
-                
-                printf("Digite o preco: ");
-                scanf("%f", &novoPacote.precoPacote);
-                printf("Digite a duracao (dias): ");
-                scanf("%d", &novoPacote.duracaoDias);
-                printf("Digite o tipo de transporte (A/B): ");
-                scanf(" %c", &novoPacote.tipoTransporte);
-
-                if(inserirPacote(lista, &novoPacote)) {
-                    printf("Pacote inserido com sucesso!\n");
-                }
-                break;
-            }
-            case 3: {
-                if (lista == NULL) {
-                    printf("Crie a lista primeiro!\n");
-                    break;
-                }
-                int id;
-                printf("Digite o ID do pacote a ser removido: ");
-                scanf("%d", &id);
-                if(removerPacote(lista, id)) {
-                    printf("Pacote removido com sucesso!\n");
-                }
-                break;
-            }
-            case 4: {
-                if (lista == NULL) {
-                    printf("Crie a lista primeiro!\n");
-                    break;
-                }
-                int id;
-                printf("Digite o ID do pacote a ser buscado: ");
-                scanf("%d", &id);
-                ListaNo *resultado = buscarPacote(lista, id);
-                if(resultado != NULL) {
-                    printf("Pacote encontrado:\n");
-                    printf("ID: %d, Destino: %s, Preco: R$ %.2f, Duracao: %d dias, Transporte: %c\n",
-                           resultado->pacote->id, resultado->pacote->destino, 
-                           resultado->pacote->precoPacote, resultado->pacote->duracaoDias, 
-                           resultado->pacote->tipoTransporte);
-                }
-                break;
-            }
-            case 5: {
-                if (lista == NULL) {
-                    printf("Crie a lista primeiro!\n");
-                    break;
-                }
-                imprimirPacotes(lista);
-                break;
-            }
-            case 6: {
-                if (lista == NULL) {
-                    printf("Crie a lista primeiro!\n");
-                    break;
-                }
-                Pacote pacoteAtualizado;
-                printf("Digite o ID do pacote a ser atualizado: ");
-                scanf("%d", &pacoteAtualizado.id);
-                getchar(); // Limpa o buffer do \n
-                printf("Digite o novo destino: ");
-                fgets(pacoteAtualizado.destino, 49, stdin);
-                pacoteAtualizado.destino[strcspn(pacoteAtualizado.destino, "\n")] = '\0';
-                
-                printf("Digite o novo preco: ");
-                scanf("%f", &pacoteAtualizado.precoPacote);
-                printf("Digite a nova duracao (dias): ");
-                scanf("%d", &pacoteAtualizado.duracaoDias);
-                printf("Digite o novo tipo de transporte (A/B): ");
-                scanf(" %c", &pacoteAtualizado.tipoTransporte);
-
-                if(atualizarPacote(lista, pacoteAtualizado.id, &pacoteAtualizado)) {
-                    printf("Pacote atualizado com sucesso!\n");
-                }
-                break;
-            }
-            case 7: {
-                if (lista == NULL) {
-                    printf("Lista ja esta vazia!\n");
-                } else {
-                    salvarLista(lista);
-                    lista = excluirLista(lista);
-                    printf("Lista excluida com sucesso!\n");
-                }
-                break;
-            }
-            case 8: {
-                if (lista == NULL) {
-                    printf("Crie a lista primeiro!\n");
-                    break;
-                }
-                salvarLista(lista);
-                printf("Dados salvos com sucesso!\n");
-                break;
-            }
-            case 9:
-                if (lista != NULL) {
-                    salvarLista(lista);
-                    lista = excluirLista(lista);
-                }
-                printf("Programa encerrado!\n");
-                break;
-            default:
-                printf("Opcao invalida!\n");
-        }
-    } while(opcao != 9);
-
-    return 0;
-}
-
-/* ^^ atualizar os dados de um pacote na lista */
-int atualizarPacote(Lista *lista, int id, Pacote *novoPacote)
-{
-    if (lista == NULL || lista->prim == NULL)
-    {
-        printf("A lista nao foi criada\n");
-        return 0;
-    }
-
-    ListaNo *p;
-
-    /* ^^ percorrer a lista procurando o pacote com o id fornecido */
-    for (p = lista->prim; p != NULL; p = p->prox)
-    {
-        if (p->pacote->id == id)
-        {
-            *(p->pacote) = *novoPacote;
-            return 1;
-        }
-    }
-
-    return 0;
-}
-
-/* ^^ funcao que vai buscar um pacote pelo seu id */
-ListaNo *buscarPacote(Lista *lista, int id)
-{
-    if (lista == NULL || lista->prim == NULL)
-    {
-        printf("A lista nao foi criada ou esta vazia\n");
-        return NULL;
-    }
-
-    ListaNo *p;
-
-    for (p = lista->prim; p != NULL; p = p->prox)
-    {
-        if (p->pacote->id == id)
-        {
-            return p;
-        }
-    }
-
     return NULL;
 }
 
-/* ^^ criar uma nova lista */
-Lista *criarLista()
+// Funcao para inserir no inicio da lista
+void inserirInicio(Pacote **lista)
 {
-    Lista *nova = (Lista *)malloc(sizeof(Lista));
+    Pacote *novoPacote = (Pacote *)malloc(sizeof(Pacote));
+    char buffer[100]; // Buffer temporario para entrada
 
-    if (nova == NULL)
-    {
-        printf("Sem espaco\n");
-        return NULL;
-    }
+    printf("Digite o ID do pacote: ");
+    scanf("%d", &novoPacote->id);
+    getchar(); // Limpa o buffer de entrada
 
-    nova->prim = NULL;
+    printf("Digite o destino: ");
+    fgets(novoPacote->destino, sizeof(novoPacote->destino), stdin);
+    novoPacote->destino[strcspn(novoPacote->destino, "\n")] = 0; // Remove newline
 
-    return nova;
+    printf("Digite o preco: ");
+    scanf("%f", &novoPacote->preco);
+    getchar(); // Limpa o buffer de entrada
+
+    printf("Digite a quantidade de dias: ");
+    scanf("%d", &novoPacote->dias);
+    getchar(); // Limpa o buffer de entrada
+
+    printf("Tipo de transporte (ex: Aviao, Ônibus, Cruzeiro): ");
+    fgets(novoPacote->tipoTransporte, sizeof(novoPacote->tipoTransporte), stdin);
+    novoPacote->tipoTransporte[strcspn(novoPacote->tipoTransporte, "\n")] = 0; // Remove newline
+
+    novoPacote->proximo = *lista;
+    *lista = novoPacote;
+
+    printf("Pacote inserido no inicio com sucesso!\n");
 }
 
-/* ^^ funcao que exclui a lista e libera memória alocada */
-Lista *excluirLista(Lista *lista)
+// Funcao para inserir no final da lista (semelhante a inserirInicio)
+void inserirFinal(Pacote **lista)
 {
-    if (lista == NULL)
+    Pacote *novoPacote = (Pacote *)malloc(sizeof(Pacote));
+
+    printf("Digite o ID do pacote: ");
+    scanf("%d", &novoPacote->id);
+    getchar(); // Limpa o buffer de entrada
+
+    printf("Digite o destino: ");
+    fgets(novoPacote->destino, sizeof(novoPacote->destino), stdin);
+    novoPacote->destino[strcspn(novoPacote->destino, "\n")] = 0; // Remove newline
+
+    printf("Digite o preco: ");
+    scanf("%f", &novoPacote->preco);
+    getchar(); // Limpa o buffer de entrada
+
+    printf("Digite a quantidade de dias: ");
+    scanf("%d", &novoPacote->dias);
+    getchar(); // Limpa o buffer de entrada
+
+    printf("Tipo de transporte (ex: Aviao, Ônibus, Cruzeiro): ");
+    fgets(novoPacote->tipoTransporte, sizeof(novoPacote->tipoTransporte), stdin);
+    novoPacote->tipoTransporte[strcspn(novoPacote->tipoTransporte, "\n")] = 0; // Remove newline
+
+    novoPacote->proximo = NULL;
+
+    // Se a lista estiver vazia
+    if (*lista == NULL)
     {
-        printf("A lista nao foi criada\n");
-        return NULL;
-    }
-
-    ListaNo *aux;
-
-    while (lista->prim != NULL)
-    {
-        aux = lista->prim;
-        lista->prim = lista->prim->prox;
-        free(aux->pacote);
-        free(aux);
-    }
-
-    free(lista);
-
-    return NULL;
-}
-
-/* ^^ adiciona um pacote na lista */
-int inserirPacote(Lista *lista, Pacote *pacote)
-{
-    ListaNo *novaNo = (ListaNo *)malloc(sizeof(ListaNo));
-
-    if (novaNo == NULL)
-    {
-        printf("Sem espaco\n");
-        return 0;
-    }
-
-    novaNo->pacote = (Pacote *)malloc(sizeof(Pacote));
-
-    if (novaNo->pacote == NULL)
-    {
-        printf("Sem espaco\n");
-        free(novaNo);
-        return 0;
-    }
-
-    *(novaNo->pacote) = *pacote;
-    novaNo->prox = NULL;
-
-    if (lista->prim == NULL)
-    {
-        lista->prim = novaNo;
-    }
-    else
-    {
-        ListaNo *p = lista->prim;
-
-        while (p->prox != NULL)
-        {
-            p = p->prox;
-        }
-
-        p->prox = novaNo;
-    }
-
-    return 1;
-}
-
-/* ^^ todos os pacotes da lista */
-void imprimirPacotes(Lista *lista)
-{
-    if (lista == NULL || lista->prim == NULL)
-    {
-        printf("A lista esta vazia\n");
+        *lista = novoPacote;
+        printf("Pacote inserido no final com sucesso!\n");
         return;
     }
 
-    ListaNo *p;
-
-    /* ^^ percorrer a lista e imprimir todos os dados dos pacotes */
-    for (p = lista->prim; p != NULL; p = p->prox)
+    // Percorre até o último nó
+    Pacote *atual = *lista;
+    while (atual->proximo != NULL)
     {
-        printf("ID: %d, Destino: %s, Preco: %.2f, Duracao: %d dias, Transporte: %c\n",
-               p->pacote->id, p->pacote->destino, p->pacote->precoPacote,
-               p->pacote->duracaoDias, p->pacote->tipoTransporte);
+        atual = atual->proximo;
     }
+
+    atual->proximo = novoPacote;
+    printf("Pacote inserido no final com sucesso!\n");
 }
 
-/* ^^ remover um pacote da lista pelo id */
-int removerPacote(Lista *lista, int id)
-{
-    if (lista == NULL || lista->prim == NULL)
-    {
-        printf("A lista nao foi criada ou esta vazia\n");
-        return 0;
-    }
-
-    ListaNo *p = lista->prim;
-
-    if (p->pacote->id == id)
-    {
-        lista->prim = p->prox;
-        free(p->pacote);
-        free(p);
-        return 1;
-    }
-
-    /* ^^ percorrer a lista procurando o pacote que vai ser removido */
-    while (p->prox != NULL)
-    {
-        if (p->prox->pacote->id == id)
-        {
-            ListaNo *aux = p->prox;
-            p->prox = aux->prox;
-            free(aux->pacote);
-            free(aux);
-            return 1;
-        }
-
-        p = p->prox;
-    }
-
-    return 0;
-}
-
-/* ^^ funcao par salvar a lista em um arquivo */
-int salvarLista(Lista *lista)
-{
-    if (lista == NULL || lista->prim == NULL)
-    {
-        printf("A lista esta vazia ou nao foi criada\n");
-        return 0;
-    }
-
-    FILE *arquivo = fopen("D:\\GitHub Desktop\\C_CodeLab\\FICR_Atividades_&_Trabalhos\\Mayrton(DataStructure)\\pacoteViagens2\\pacotes.txt", "w");
-
-    if (arquivo == NULL)
-    {
-        printf("Erro ao abrir o arquivo\n");
-        return 0;
-    }
-
-    ListaNo *p;
-
-    for (p = lista->prim; p != NULL; p = p->prox)
-    {
-        char tipoTransporteStr[10];
-        if (p->pacote->tipoTransporte == 'A' || p->pacote->tipoTransporte == 'a')
-            strcpy(tipoTransporteStr, "(Aviao)");
-        else if (p->pacote->tipoTransporte == 'B' || p->pacote->tipoTransporte == 'b')
-            strcpy(tipoTransporteStr, "(Onibus)");
-        else
-            strcpy(tipoTransporteStr, "(N/A)");
-
-        fprintf(arquivo, "ID: %d | Destino: %s | Preco: R$ %.2f | Duracao: %d dias | Transporte: %c %s\n",
-                p->pacote->id, p->pacote->destino,
-                p->pacote->precoPacote,
-                p->pacote->duracaoDias,
-                p->pacote->tipoTransporte,
-                tipoTransporteStr);
-    }
-
-    fclose(arquivo);
-    return 1;
-}
-
-/* ^^ carregar os pacotes de um arquivo para a lista */
-int carregarLista(Lista *lista)
+// Funcao para mostrar a lista (atualizada para novo tipo de transporte)
+void mostrarLista(Pacote *lista)
 {
     if (lista == NULL)
     {
-        printf("A lista nao foi criada\n");
-        return 0;
+        printf("Lista vazia!\n");
+        return;
     }
 
-    FILE *arquivo = fopen("D:\\GitHub Desktop\\C_CodeLab\\FICR_Atividades_&_Trabalhos\\Mayrton(DataStructure)\\pacoteViagens2\\pacotes.txt", "r");
+    Pacote *atual = lista;
+    int contador = 1;
 
+    printf("--- Lista de Pacotes ---\n");
+    while (atual != NULL)
+    {
+        printf("Pacote %d:\n", contador);
+        printf("ID: %d\n", atual->id);
+        printf("Destino: %s\n", atual->destino);
+        printf("Preco: %.2f\n", atual->preco);
+        printf("Dias: %d\n", atual->dias);
+        printf("Tipo de Transporte: %s\n\n", atual->tipoTransporte);
+
+        atual = atual->proximo;
+        contador++;
+    }
+}
+
+// Funcao para buscar pacote (renomeada)
+void buscarPacoteA(Pacote *lista)
+{
+    if (lista == NULL)
+    {
+        printf("Lista vazia!\n");
+        return;
+    }
+
+    int idBusca;
+    printf("Digite o ID do pacote a buscar: ");
+    scanf("%d", &idBusca);
+
+    Pacote *atual = lista;
+    int encontrado = 0;
+
+    while (atual != NULL)
+    {
+        if (atual->id == idBusca)
+        {
+            printf("Pacote encontrado:\n");
+            printf("ID: %d\n", atual->id);
+            printf("Destino: %s\n", atual->destino);
+            printf("Preco: %.2f\n", atual->preco);
+            printf("Dias: %d\n", atual->dias);
+            printf("Tipo de Transporte: %s\n\n", atual->tipoTransporte);
+            encontrado = 1;
+            break;
+        }
+        atual = atual->proximo;
+    }
+
+    if (!encontrado)
+    {
+        printf("Pacote nao encontrado!\n");
+    }
+}
+
+// Funcao para atualizar pacote (atualizada)
+void atualizar(Pacote **lista)
+{
+    if (*lista == NULL)
+    {
+        printf("Lista vazia!\n");
+        return;
+    }
+
+    int idBusca;
+    printf("Digite o ID do pacote a atualizar: ");
+    scanf("%d", &idBusca);
+    getchar(); // Limpa o buffer de entrada
+
+    Pacote *atual = *lista;
+    int encontrado = 0;
+
+    while (atual != NULL)
+    {
+        if (atual->id == idBusca)
+        {
+            printf("Pacote encontrado. Digite os novos dados:\n");
+
+            printf("Novo destino (atual: %s): ", atual->destino);
+            fgets(atual->destino, sizeof(atual->destino), stdin);
+            atual->destino[strcspn(atual->destino, "\n")] = 0;
+
+            printf("Novo preco (atual: %.2f): ", atual->preco);
+            scanf("%f", &atual->preco);
+            getchar(); // Limpa o buffer de entrada
+
+            printf("Nova quantidade de dias (atual: %d): ", atual->dias);
+            scanf("%d", &atual->dias);
+            getchar(); // Limpa o buffer de entrada
+
+            printf("Novo tipo de transporte (atual: %s): ", atual->tipoTransporte);
+            fgets(atual->tipoTransporte, sizeof(atual->tipoTransporte), stdin);
+            atual->tipoTransporte[strcspn(atual->tipoTransporte, "\n")] = 0;
+
+            printf("Pacote atualizado com sucesso!\n");
+            encontrado = 1;
+            break;
+        }
+        atual = atual->proximo;
+    }
+
+    if (!encontrado)
+    {
+        printf("Pacote nao encontrado!\n");
+    }
+}
+
+// Funcao para salvar dados no arquivo (atualizada)
+void salvarDados(Pacote *lista)
+{
+    FILE *arquivo = fopen("pacotes.txt", "w");
     if (arquivo == NULL)
     {
-        printf("Erro ao abrir o arquivo\n");
-        return 0;
+        printf("Erro ao abrir o arquivo para escrita.\n");
+        return;
     }
 
-    char linha[256];
-    while (fgets(linha, sizeof(linha), arquivo) != NULL)
+    Pacote *atual = lista;
+    while (atual != NULL)
     {
-        Pacote *pacote = (Pacote *)malloc(sizeof(Pacote));
-        if (sscanf(linha, "ID: %d | Destino: %[^|] | Preco: R$ %f | Duracao: %d dias | Transporte: %c",
-                   &pacote->id, pacote->destino, &pacote->precoPacote,
-                   &pacote->duracaoDias, &pacote->tipoTransporte) == 5)
-        {
-            inserirPacote(lista, pacote);
-        }
-        free(pacote);
+        fprintf(arquivo, "%d; %s; %.2f; %d; %s\n",
+                atual->id,
+                atual->destino,
+                atual->preco,
+                atual->dias,
+                atual->tipoTransporte);
+        atual = atual->proximo;
     }
 
     fclose(arquivo);
-    return 1;
+    printf("Dados salvos com sucesso!\n");
+}
+
+// Funcao para carregar dados de um arquivo (atualizada)
+void carregarDados(Pacote **lista)
+{
+    FILE *arquivo = fopen("pacotes.txt", "r");
+    if (arquivo == NULL)
+    {
+        printf("Erro ao abrir o arquivo ou arquivo nao existe.\n");
+        return;
+    }
+
+    // Limpar lista existente antes de carregar
+    excluirLista(lista);
+
+    Pacote *novoPacote;
+    while (!feof(arquivo))
+    {
+        novoPacote = (Pacote *)malloc(sizeof(Pacote));
+
+        if (fscanf(arquivo, " %d; %[^;]; %f; %d; %[^\n]\n",
+                   &novoPacote->id,
+                   novoPacote->destino,
+                   &novoPacote->preco,
+                   &novoPacote->dias,
+                   novoPacote->tipoTransporte) != 5)
+        {
+            free(novoPacote);
+            break;
+        }
+
+        novoPacote->proximo = *lista;
+        *lista = novoPacote;
+    }
+
+    fclose(arquivo);
+    printf("Dados carregados com sucesso!\n");
+}
+
+// Funcao para excluir pacote especifico
+void excluirPacote(Pacote **lista)
+{
+    if (*lista == NULL)
+    {
+        printf("Lista vazia!\n");
+        return;
+    }
+
+    int idBusca;
+    printf("Digite o ID do pacote a excluir: ");
+    scanf("%d", &idBusca);
+
+    Pacote *atual = *lista;
+    Pacote *anterior = NULL;
+    int encontrado = 0;
+
+    while (atual != NULL)
+    {
+        if (atual->id == idBusca)
+        {
+            if (anterior == NULL)
+            {
+                // Pacote a ser removido é o primeiro
+                *lista = atual->proximo;
+            }
+            else
+            {
+                anterior->proximo = atual->proximo;
+            }
+
+            free(atual);
+            printf("Pacote excluido com sucesso!\n");
+            encontrado = 1;
+            break;
+        }
+
+        anterior = atual;
+        atual = atual->proximo;
+    }
+
+    if (!encontrado)
+    {
+        printf("Pacote nao encontrado!\n");
+    }
+}
+
+// Funcao para excluir toda a lista
+void excluirLista(Pacote **lista)
+{
+    if (*lista == NULL)
+    {
+        printf("Lista ja esta vazia!\n");
+        return;
+    }
+
+    Pacote *atual = *lista;
+    Pacote *proximo;
+
+    while (atual != NULL)
+    {
+        proximo = atual->proximo;
+        free(atual);
+        atual = proximo;
+    }
+
+    *lista = NULL;
+    printf("Lista excluida com sucesso!\n");
+}
+
+// Funcao para retornar o tamanho da lista
+int tamanho(Pacote *lista)
+{
+    int contador = 0;
+    Pacote *atual = lista;
+
+    while (atual != NULL)
+    {
+        contador++;
+        atual = atual->proximo;
+    }
+
+    return contador;
+}
+
+// Funcao principal
+int main()
+{
+    Pacote *lista = criarLista();
+    int opcao;
+
+    do
+    {
+        printf("\n--- MENU ---\n");
+        printf("1. Inserir no Inicio\n");
+        printf("2. Inserir no Final\n");
+        printf("3. Mostrar Lista\n");
+        printf("4. Buscar Pacote\n");
+        printf("5. Atualizar Pacote\n");
+        printf("6. Excluir Pacote\n");
+        printf("7. Excluir Toda a Lista\n");
+        printf("8. Mostrar Tamanho da Lista\n");
+        printf("9. Carregar Dados do Arquivo\n");
+        printf("10. Salvar Dados no Arquivo\n");
+        printf("0. Sair\n");
+        printf("Escolha uma opcao: ");
+        scanf("%d", &opcao);
+
+        switch (opcao)
+        {
+        case 1:
+            inserirInicio(&lista);
+            break;
+        case 2:
+            inserirFinal(&lista);
+            break;
+        case 3:
+            mostrarLista(lista);
+            break;
+        case 4:
+            buscarPacoteA(lista);
+            break;
+        case 5:
+            atualizar(&lista);
+            break;
+        case 6:
+            excluirPacote(&lista);
+            break;
+        case 7:
+            excluirLista(&lista);
+            break;
+        case 8:
+            printf("Tamanho da lista: %d\n", tamanho(lista));
+            break;
+        case 9:
+            carregarDados(&lista);
+            break;
+        case 10:
+            salvarDados(lista);
+            break;
+        case 0:
+            printf("Encerrando o programa...\n");
+            break;
+        default:
+            printf("Opcao invalida!\n");
+        }
+    } while (opcao != 0);
+
+    // Liberar memória antes de sair
+    excluirLista(&lista);
+
+    return 0;
 }

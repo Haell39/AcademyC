@@ -8,7 +8,7 @@ precoPacote: real
 duracaoDias: inteiro
 tipoTransporte: char ('A' para avião, 'B' para ônibus)
 
-
+õ ã ó í ú á ô ê ì ò à ç
 -------------------------------------------------------------------------------------
 
 << Lista Simplesmente Ligada com Vetor -->
