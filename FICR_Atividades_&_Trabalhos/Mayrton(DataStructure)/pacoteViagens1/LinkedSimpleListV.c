@@ -2,10 +2,10 @@
 #include <stdlib.h>
 #include <string.h>
 
-#define MAX 100 // Tamanho máximo da lista
-#define ARQUIVO "D:\\GitHub Desktop\\C_CodeLab\\FICR_Atividades_&_Trabalhos\\Mayrton(DataStructure)\\pacoteViagens1\\pacotes.txt"
+#define MAX 100
+#define MAX_PACOTES 100
 
-// Estrutura do elemento Viagem
+// Estrutura do elemento Pacote de Viagem
 typedef struct
 {
     int id;
@@ -13,16 +13,15 @@ typedef struct
     float precoPacote;
     int duracaoDias;
     char tipoTransporte; // 'A' para avião, 'B' para ônibus
-} Viagem;
+} PacoteViagem;
 
-// Estrutura da lista
 typedef struct
 {
-    Viagem viagens[MAX];
+    PacoteViagem pacotes[MAX];
     int tamanho;
 } Lista;
 
-// Função para criar a lista
+// Função que cria a lista
 Lista *criarLista()
 {
     Lista *lista = (Lista *)malloc(sizeof(Lista));
@@ -30,18 +29,18 @@ Lista *criarLista()
     return lista;
 }
 
-// Função para verificar se a lista está cheia
+// Verifica se a lista está cheia
 int estaCheia(Lista *lista)
 {
     return lista->tamanho == MAX;
 }
 
-// Função para inserir um elemento no final da lista
-void inserirElemento(Lista *lista, Viagem viagem)
+// Insere um pacote de viagem no final da lista
+void inserirElemento(Lista *lista, PacoteViagem pacote)
 {
     if (!estaCheia(lista))
     {
-        lista->viagens[lista->tamanho] = viagem;
+        lista->pacotes[lista->tamanho] = pacote;
         lista->tamanho++;
     }
     else
@@ -50,17 +49,17 @@ void inserirElemento(Lista *lista, Viagem viagem)
     }
 }
 
-// Função para inserir um elemento no início da lista
-void inserirElementoInicio(Lista *lista, Viagem viagem)
+// Insere um pacote de viagem no início da lista
+void inserirElementoInicio(Lista *lista, PacoteViagem pacote)
 {
     if (!estaCheia(lista))
     {
         int i;
         for (i = lista->tamanho; i > 0; i--)
         {
-            lista->viagens[i] = lista->viagens[i - 1];
+            lista->pacotes[i] = lista->pacotes[i - 1];
         }
-        lista->viagens[0] = viagem;
+        lista->pacotes[0] = pacote;
         lista->tamanho++;
     }
     else
@@ -69,38 +68,41 @@ void inserirElementoInicio(Lista *lista, Viagem viagem)
     }
 }
 
-// Função para inserir um elemento em uma posição específica
-void inserirElementoID(Lista *lista, Viagem viagem, int pos)
+// Insere um pacote de viagem em uma posição específica da lista
+void inserirElementoID(Lista *lista, PacoteViagem pacote, int pos)
 {
-    if (!estaCheia(lista) && pos >= 0 && pos <= lista->tamanho)
+    if (estaCheia(lista))
     {
-        int i;
-        for (i = lista->tamanho; i > pos; i--)
-        {
-            lista->viagens[i] = lista->viagens[i - 1];
-        }
-        lista->viagens[pos] = viagem;
-        lista->tamanho++;
+        printf("Erro: Lista cheia! Não é possível inserir mais elementos.\n");
+        return;
     }
-    else
+    if (pos < 0 || pos > lista->tamanho)
     {
-        printf("Erro: Posição inválida ou lista cheia!\n");
+        printf("Erro: Posição inválida! A posição deve estar entre 0 e %d.\n", lista->tamanho);
+        return;
     }
+    int i;
+    for (i = lista->tamanho; i > pos; i--)
+    {
+        lista->pacotes[i] = lista->pacotes[i - 1];
+    }
+    lista->pacotes[pos] = pacote;
+    lista->tamanho++;
 }
 
-// Função para listar todos os elementos
+// Lista todos os pacotes de viagem
 void listarElementos(Lista *lista)
 {
     int i;
     for (i = 0; i < lista->tamanho; i++)
     {
-        Viagem viagem = lista->viagens[i];
-        printf("ID: %d | Destino: %s | Preço do Pacote: %.2f | Duração (dias): %d | Tipo de Transporte: %c\n",
-               viagem.id, viagem.destino, viagem.precoPacote, viagem.duracaoDias, viagem.tipoTransporte);
+        PacoteViagem pacote = lista->pacotes[i];
+        printf("ID: %d | Destino: %s | Preço: %.2f | Duração: %d dias | Transporte: %c\n",
+               pacote.id, pacote.destino, pacote.precoPacote, pacote.duracaoDias, pacote.tipoTransporte);
     }
 }
 
-// Função para remover um elemento por posição
+// Remove um pacote de viagem pela sua posição
 void removerElemento(Lista *lista, int pos)
 {
     if (pos >= 0 && pos < lista->tamanho)
@@ -108,7 +110,7 @@ void removerElemento(Lista *lista, int pos)
         int i;
         for (i = pos; i < lista->tamanho - 1; i++)
         {
-            lista->viagens[i] = lista->viagens[i + 1];
+            lista->pacotes[i] = lista->pacotes[i + 1];
         }
         lista->tamanho--;
     }
@@ -118,233 +120,327 @@ void removerElemento(Lista *lista, int pos)
     }
 }
 
-// Função para atualizar um elemento
-void atualizar(Lista *lista, int pos, Viagem novaViagem)
+// Atualiza um pacote de viagem
+void atualizar(Lista *lista)
 {
-    if (pos >= 0 && pos < lista->tamanho)
+    int id;
+    printf("Digite o ID do pacote que deseja atualizar: ");
+    scanf("%d", &id);
+
+    int encontrado = 0; // Flag para verificar se o ID foi encontrado
+
+    for (int i = 0; i < lista->tamanho; i++)
     {
-        // Verifica se o ID da nova viagem é único
-        for (int i = 0; i < lista->tamanho; i++)
+        if (lista->pacotes[i].id == id)
         {
-            if (lista->viagens[i].id == novaViagem.id && i != pos)
-            {
-                printf("Erro: ID %d já existe na lista!\n", novaViagem.id);
-                return;
-            }
+            printf("Pacote encontrado. Insira os novos dados:\n");
+
+            printf("Novo destino: ");
+            scanf(" %[^\n]", lista->pacotes[i].destino);
+
+            printf("Novo custo: ");
+            scanf("%f", &lista->pacotes[i].precoPacote);
+
+            printf("Pacote com ID %d atualizado com sucesso!\n", id);
+            encontrado = 1; // Marca que o ID foi encontrado
+            break;
         }
-        lista->viagens[pos] = novaViagem;
     }
-    else
+
+    if (!encontrado)
     {
-        printf("Erro: Posição inválida!\n");
+        printf("Erro: Pacote com ID %d não encontrado!\n", id);
     }
 }
 
-// Função para buscar um elemento por ID
-Viagem *buscarElemento(Lista *lista, int id)
+// Busca um pacote de viagem pelo id
+PacoteViagem *buscarElemento(Lista *lista, int id)
 {
     int i;
     for (i = 0; i < lista->tamanho; i++)
     {
-        if (lista->viagens[i].id == id)
+        if (lista->pacotes[i].id == id)
         {
-            return &lista->viagens[i];
+            return &lista->pacotes[i];
         }
     }
-    printf("Pacote de Viagem com ID %d não encontrado!\n", id);
+    printf("Pacote com ID %d não encontrado!\n", id);
     return NULL;
 }
 
-// Função para retornar o tamanho da lista
 int tamanho(Lista *lista)
 {
     return lista->tamanho;
 }
 
-// Função para excluir a lista
+// << Excluir lista :
+
+void limparArquivo(const char *nomeArquivo)
+{
+    FILE *file = fopen(nomeArquivo, "w");
+    if (file != NULL)
+    {
+        fclose(file);
+    }
+    else
+    {
+        printf("Erro ao limpar o arquivo %s.\n", nomeArquivo);
+    }
+}
+
 void excluirLista(Lista *lista)
 {
     free(lista);
+    limparArquivo("pacotes.txt"); // Limpa o conteúdo do arquivo
 }
 
-// Função para carregar dados do arquivo
 void carregarDados(Lista *lista)
 {
-    FILE *file = fopen(ARQUIVO, "r");
+    FILE *file = fopen("pacotes.txt", "r");
     if (file == NULL)
     {
-        printf("Erro ao abrir arquivo %s.\n", ARQUIVO);
+        printf("Erro ao abrir arquivo.\n");
         return;
     }
 
-    Viagem temp;
-    while (fscanf(file, "%d\n", &temp.id) != EOF)
-    {
-        fscanf(file, "%[^\n]\n", temp.destino);
-        fscanf(file, "%f\n", &temp.precoPacote);
-        fscanf(file, "%d\n", &temp.duracaoDias);
-        fscanf(file, " %c\n", &temp.tipoTransporte);
+    // Resetar a lista antes de carregar novos dados
+    lista->tamanho = 0;
 
-        // Verifica se a inserção foi bem-sucedida
-        if (!estaCheia(lista))
+    PacoteViagem pacoteTemp;
+    while (fscanf(file, "%d %[^\n] %f %d %c",
+                  &pacoteTemp.id,
+                  pacoteTemp.destino,
+                  &pacoteTemp.precoPacote,
+                  &pacoteTemp.duracaoDias,
+                  &pacoteTemp.tipoTransporte) == 5)
+    {
+        if (lista->tamanho < MAX_PACOTES)
         {
-            inserirElemento(lista, temp);
+            lista->pacotes[lista->tamanho] = pacoteTemp;
+            lista->tamanho++; // Atualiza o tamanho da lista a cada pacote carregado
         }
         else
         {
-            printf("Erro: Lista cheia! Não foi possível inserir o pacote com ID %d.\n", temp.id);
+            printf("Erro: Lista cheia. Não foi possível carregar mais pacotes.\n");
+            break;
         }
     }
 
     fclose(file);
+    printf("Carregamento concluído. Total de pacotes: %d\n", lista->tamanho);
 }
 
-// Função para salvar os dados no arquivo
+// Salva os dados no arquivo
 void salvarDados(Lista *lista)
 {
-    FILE *file = fopen(ARQUIVO, "w");
+    FILE *file = fopen("pacotes.txt", "w");
+
     if (file == NULL)
     {
-        printf("Erro ao abrir arquivo %s.\n", ARQUIVO);
+        printf("Erro ao abrir arquivo.\n");
         return;
     }
 
     int i;
+
     for (i = 0; i < lista->tamanho; i++)
     {
-        Viagem viagem = lista->viagens[i];
-        fprintf(file, "ID: %d | Destino: %s | Preço do Pacote: %.2f | Duração (dias): %d | Tipo de Transporte: %c\n",
-                viagem.id, viagem.destino, viagem.precoPacote, viagem.duracaoDias, viagem.tipoTransporte);
+        PacoteViagem pacote = lista->pacotes[i];
+
+        fprintf(file, "ID: %d\nDestino: %s\nPreço: %.2f\nTempo: %d\nTransporte: %c\n",
+                pacote.id, pacote.destino, pacote.precoPacote,
+                pacote.duracaoDias, pacote.tipoTransporte);
     }
 
     fclose(file);
 }
 
-// Função principal
 int main()
 {
     Lista *lista = criarLista();
+
     int opcao;
-    Viagem viagemTemp;
+
+    PacoteViagem pacoteTemp;
+
     int pos;
 
     do
     {
         printf("\nMenu:\n");
-        printf("1. Inserir Pacote de Viagem no Final\n");
-        printf("2. Inserir Pacote de Viagem no Início\n");
-        printf("3. Inserir Pacote de Viagem por Posição\n");
-        printf("4. Listar Pacotes de Viagem\n");
-        printf("5. Remover Pacote de Viagem por Posição\n");
-        printf("6. Atualizar Pacote de Viagem\n");
-        printf("7. Buscar Pacote de Viagem por ID\n");
+        printf("1. Inserir Pacote no Final\n");
+        printf("2. Inserir Pacote no Início\n");
+        printf("3. Inserir Pacote por Posição\n");
+        printf("4. Listar Pacotes\n");
+        printf("5. Remover Pacote por Posição\n");
+        printf("6. Atualizar Pacote\n");
+        printf("7. Buscar Pacote por ID\n");
         printf("8. Tamanho da Lista\n");
         printf("9. Carregar Dados do Arquivo\n");
         printf("10. Salvar Dados no Arquivo\n");
         printf("0. Sair\n");
+        printf("11. Excluir a Lista\n");
         printf("Escolha uma opção: ");
         scanf("%d", &opcao);
 
         switch (opcao)
         {
         case 1:
-            printf("Digite os dados do pacote de viagem:\n");
+            printf("Digite os dados do pacote:\n");
             printf("ID: ");
-            scanf("%d", &viagemTemp.id);
+            scanf("%d", &pacoteTemp.id);
             printf("Destino: ");
-            scanf(" %[^\n]", viagemTemp.destino);
-            printf("Preço do Pacote: ");
-            scanf("%f", &viagemTemp.precoPacote);
-            printf("Duração (dias): ");
-            scanf("%d", &viagemTemp.duracaoDias);
-            printf("Tipo de Transporte (A para avião, B para ônibus): ");
-            scanf(" %c", &viagemTemp.tipoTransporte);
-            inserirElemento(lista, viagemTemp);
+            scanf(" %[^\n]", pacoteTemp.destino);
+            printf("Preço: ");
+            scanf("%f", &pacoteTemp.precoPacote);
+            printf("Duração em dias: ");
+            scanf("%d", &pacoteTemp.duracaoDias);
+            printf("Tipo de Transporte (A/B): ");
+            scanf(" %c", &pacoteTemp.tipoTransporte);
+            inserirElemento(lista, pacoteTemp);
             break;
+
         case 2:
-            printf("Digite os dados do pacote de viagem:\n");
+            printf("Digite os dados do pacote:\n");
             printf("ID: ");
-            scanf("%d", &viagemTemp.id);
+            scanf("%d", &pacoteTemp.id);
             printf("Destino: ");
-            scanf(" %[^\n]", viagemTemp.destino);
-            printf("Preço do Pacote: ");
-            scanf("%f", &viagemTemp.precoPacote);
-            printf("Duração (dias): ");
-            scanf("%d", &viagemTemp.duracaoDias);
-            printf("Tipo de Transporte (A para avião, B para ônibus): ");
-            scanf(" %c", &viagemTemp.tipoTransporte);
-            inserirElementoInicio(lista, viagemTemp);
+            scanf(" %[^\n]", pacoteTemp.destino);
+            printf("Preço: ");
+            scanf("%f", &pacoteTemp.precoPacote);
+            printf("Duração em dias: ");
+            scanf("%d", &pacoteTemp.duracaoDias);
+            printf("Tipo de Transporte (A/B): ");
+            scanf(" %c", &pacoteTemp.tipoTransporte);
+            inserirElementoInicio(lista, pacoteTemp);
             break;
+
         case 3:
-            printf("Digite os dados do pacote de viagem:\n");
+            printf("Digite os dados do pacote:\n");
             printf("ID: ");
-            scanf("%d", &viagemTemp.id);
+            scanf("%d", &pacoteTemp.id);
             printf("Destino: ");
-            scanf(" %[^\n]", viagemTemp.destino);
-            printf("Preço do Pacote: ");
-            scanf("%f", &viagemTemp.precoPacote);
-            printf("Duração (dias): ");
-            scanf("%d", &viagemTemp.duracaoDias);
-            printf("Tipo de Transporte (A para avião, B para ônibus): ");
-            scanf(" %c", &viagemTemp.tipoTransporte);
+            scanf(" %[^\n]", pacoteTemp.destino);
+            printf("Preço: ");
+            scanf("%f", &pacoteTemp.precoPacote);
+            printf("Duração em dias: ");
+            scanf("%d", &pacoteTemp.duracaoDias);
+            printf("Tipo de Transporte (A/B): ");
+            scanf(" %c", &pacoteTemp.tipoTransporte);
             printf("Posição para inserir: ");
             scanf("%d", &pos);
-            inserirElementoID(lista, viagemTemp, pos);
+
+            if (pos < 0 || pos > tamanho(lista))
+            {
+                printf("Erro: Posição inválida! Insira um valor entre 0 e %d.\n", tamanho(lista));
+            }
+            else
+            {
+                inserirElementoID(lista, pacoteTemp, pos);
+            }
             break;
+
         case 4:
             listarElementos(lista);
             break;
+
         case 5:
-            printf("Digite a posição para remover: ");
+            printf("Posição para remover: ");
             scanf("%d", &pos);
             removerElemento(lista, pos);
             break;
+
         case 6:
-            printf("Digite a posição do pacote de viagem para atualizar: ");
-            scanf("%d", &pos);
-            printf("Digite os novos dados do pacote de viagem:\n");
-            printf("ID: ");
-            scanf("%d", &viagemTemp.id);
-            printf("Destino: ");
-            scanf(" %[^\n]", viagemTemp.destino);
-            printf("Preço do Pacote: ");
-            scanf("%f", &viagemTemp.precoPacote);
-            printf("Duração (dias): ");
-            scanf("%d", &viagemTemp.duracaoDias);
-            printf("Tipo de Transporte (A para avião, B para ônibus): ");
-            scanf(" %c", &viagemTemp.tipoTransporte);
-            atualizar(lista, pos, viagemTemp);
-            break;
-        case 7:
-            printf("Digite o ID do pacote de viagem para buscar: ");
-            scanf("%d", &pos);
-            Viagem *encontrado = buscarElemento(lista, pos);
-            if (encontrado != NULL)
+        {
+            int id;
+            printf("Digite o ID do pacote que deseja atualizar: ");
+            scanf("%d", &id);
+
+            PacoteViagem pacoteTemp;
+            int encontrado = 0; // Flag para verificar se o ID foi encontrado
+
+            for (int i = 0; i < tamanho(lista); i++)
             {
-                printf("Pacote de Viagem encontrado: ID: %d | Destino: %s | Preço do Pacote: %.2f | Duração (dias): %d | Tipo de Transporte: %c\n",
-                       encontrado->id, encontrado->destino, encontrado->precoPacote,
-                       encontrado->duracaoDias, encontrado->tipoTransporte);
+                if (lista->pacotes[i].id == id)
+                {
+                    printf("Pacote encontrado. Insira os novos dados:\n");
+                    printf("Novo ID: ");
+                    scanf("%d", &pacoteTemp.id);
+                    printf("Novo Destino: ");
+                    scanf(" %[^\n]", pacoteTemp.destino);
+                    printf("Novo Preço: ");
+                    scanf("%f", &pacoteTemp.precoPacote);
+                    printf("Nova Duração em dias: ");
+                    scanf("%d", &pacoteTemp.duracaoDias);
+                    printf("Novo Tipo de Transporte (A/B): ");
+                    scanf(" %c", &pacoteTemp.tipoTransporte);
+
+                    // Atualiza os dados no pacote correspondente
+                    lista->pacotes[i] = pacoteTemp;
+                    encontrado = 1; // Marca que o ID foi encontrado
+                    printf("Pacote com ID %d atualizado com sucesso!\n", id);
+                    break;
+                }
+            }
+
+            if (!encontrado)
+            {
+                printf("Erro: Pacote com ID %d não encontrado!\n", id);
             }
             break;
-        case 8:
-            printf("Tamanho da lista: %d\n", tamanho(lista));
+        }
+
+        case 7:
+            printf("ID do pacote para buscar: ");
+            int id;
+            scanf("%d", &id);
+
+            PacoteViagem *encontrado = buscarElemento(lista, id);
+
+            if (encontrado != NULL)
+            {
+                printf("Pacote encontrado: ID: %d | Destino: %s | Preço: %.2f | Duração: %d dias | Transporte: %c\n",
+                       encontrado->id, encontrado->destino,
+                       encontrado->precoPacote,
+                       encontrado->duracaoDias,
+                       encontrado->tipoTransporte);
+            }
             break;
+
+        case 8:
+            printf("Tamanho atual da lista: %d\n", tamanho(lista));
+            break;
+
         case 9:
             carregarDados(lista);
             printf("Dados carregados com sucesso!\n");
             break;
+
         case 10:
             salvarDados(lista);
             printf("Dados salvos com sucesso!\n");
             break;
         case 0:
-            printf("Saindo...\n");
+            printf("Você realmente deseja sair? (s/n): ");
+            char confirmacao;
+            scanf(" %c", &confirmacao);
+            if (confirmacao == 's' || confirmacao == 'S')
+            {
+                printf("Programa encerrado.\n");
+                return 0;
+            }
             break;
+
+        case 11:
+            excluirLista(&lista);
+            printf("Lista excluída e arquivo limpo.\n");
+            lista = criarLista(); // Recriar a lista vazia após exclusão
+            break;
+
         default:
             printf("Opção inválida!\n");
         }
     } while (opcao != 0);
 
-    excluirLista(lista);
     return 0;
 }
