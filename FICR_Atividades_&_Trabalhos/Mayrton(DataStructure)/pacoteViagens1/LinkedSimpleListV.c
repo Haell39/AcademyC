@@ -40,7 +40,7 @@ int main()
     Lista *lista = NULL;
     int opcao;
 
-    // Verifica se o arquivo existe e não esta vazio
+    // Verifica se o arquivo existe e não está vazio
     FILE *file = fopen("D:\\GitHub Desktop\\C_CodeLab\\FICR_Atividades_&_Trabalhos\\Mayrton(DataStructure)\\pacoteViagens1\\pacotes.txt", "r");
     if (file)
     {
@@ -218,22 +218,12 @@ int main()
             break;
         }
         case 9:
-            if (lista != NULL)
-            {
-                salvarDados(lista);
-                lista = excluirLista(lista);
-            }
             printf("Programa encerrado!\n");
             break;
         default:
             printf("Opcao invalida!\n");
         }
     } while (opcao != 9);
-
-    if (lista)
-    {
-        excluirLista(lista);
-    }
 
     return 0;
 }
