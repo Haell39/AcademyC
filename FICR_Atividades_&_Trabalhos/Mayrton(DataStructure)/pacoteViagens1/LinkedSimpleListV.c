@@ -1,19 +1,3 @@
-/******************************************************************
- * Nome: Lista com vetores                                        *
- * Descricao: Implementacao de lista com uso de vetores (array).  *
- *            Esse codigo possui as principais operacoes da       *
- *            lista, como:                                        *
- *            criar lista,                                        *
- *            inserir elemento,                                   *
- *            remover elemento,                                   *
- *            buscar elemento,                                    *
- *            mostrar elementos,                                  *
- *            atualizar elementos,                                *
- *            excluir lista.                                      *
- * Autor: Rafael Andrade                                          *
- * Ultima alteracao: 13/12/2024                                   *
- ******************************************************************/
-
 // ** OBS: Tirei todos os caracteres especiais e acentos para nao dar conflito com o compilador do C
 
 #include <stdio.h>
@@ -55,6 +39,19 @@ int main()
 {
     Lista *lista = NULL;
     int opcao;
+
+    // Verifica se o arquivo existe e não esta vazio
+    FILE *file = fopen("D:\\GitHub Desktop\\C_CodeLab\\FICR_Atividades_&_Trabalhos\\Mayrton(DataStructure)\\pacoteViagens1\\pacotes.txt", "r");
+    if (file)
+    {
+        fseek(file, 0, SEEK_END); // Move o ponteiro para o final do arquivo
+        if (ftell(file) > 0)      // Verifica se o tamanho do arquivo é maior que 0
+        {
+            lista = criarLista(); // Cria a lista
+            carregarDados(lista); // Carrega os dados do arquivo
+        }
+        fclose(file); // Fecha o arquivo
+    }
 
     do
     {
@@ -197,15 +194,15 @@ int main()
         }
         case 7:
         {
-            if (lista == NULL)
+            if (lista)
             {
-                printf("Lista ja esta vazia!\n");
+                salvarDados(lista); // Salva os dados antes de excluir, se necessario
+                lista = excluirLista(lista);
+                printf("Lista excluida com sucesso!\n");
             }
             else
             {
-                salvarDados(lista);
-                lista = excluirLista(lista);
-                printf("Lista excluida com sucesso!\n");
+                printf("A lista ja esta vazia.\n");
             }
             break;
         }
@@ -233,6 +230,11 @@ int main()
         }
     } while (opcao != 9);
 
+    if (lista)
+    {
+        excluirLista(lista);
+    }
+
     return 0;
 }
 
@@ -251,7 +253,7 @@ Lista *criarLista()
     if (nova->elementos == NULL)                              //
     {
         printf("Erro ao alocar memoria para elementos.\n");
-        free(nova);  // Libera memoria já alocada para a lista
+        free(nova);  // Libera memoria ja alocada para a lista
         return NULL; // denovo vai retorna NULL se nao conseguir alocar memoria
     }
     return nova;
@@ -265,9 +267,19 @@ Lista *excluirLista(Lista *lista)
         printf("A lista nao foi criada.\n");
         return NULL; // Retorna NULL se a lista nao existe
     }
+
+    // Libera memoria dos elementos da lista
     free(lista->elementos); // Libera memoria dos elementos da lista
     free(lista);            // Libera memoria da lista (da propria lista)
-    return NULL;            // Aqui retorna NULL, mas é pelo fato de indicar que a lista foi excluida, ou pelo menos é oq eu entendi(anotacões caderno)
+
+    // Limpa o conteúdo do arquivo
+    FILE *file = fopen("D:\\GitHub Desktop\\C_CodeLab\\FICR_Atividades_&_Trabalhos\\Mayrton(DataStructure)\\pacoteViagens1\\pacotes.txt", "w");
+    if (file)
+    {
+        fclose(file); // Apenas abre e fecha para limpar o conteúdo
+    }
+
+    return NULL; // Aqui retorna NULL, indicando que a lista foi excluida
 }
 
 /* Funcao para imprimir os pacotes */
@@ -297,7 +309,7 @@ int inserirElemento(Lista *lista, Pacote pacote)
 
     if (lista->tamanho >= TAM)
     {
-        // Aqui é a melhor parte e onde mais deu erro pra mim, aqui é onde aumenta a capacidade da lista se necessário usando realloc
+        // Aqui é a melhor parte e onde mais deu erro pra mim, aqui é onde aumenta a capacidade da lista se necessario usando realloc
         lista->elementos = realloc(lista->elementos, (lista->tamanho + TAM) * sizeof(Pacote));
         if (lista->elementos == NULL)
         {
@@ -316,26 +328,35 @@ int removerElemento(Lista *lista, int id)
 {
     if (lista == NULL)
     {
-        printf("A lista nao foi criada.\n");
-        return 0; // 0 se nao existe
+        printf("Erro: A lista nao foi criada.\n");
+        return 0; // Lista inexistente
     }
 
+    if (lista->tamanho == 0)
+    {
+        printf("Erro: A lista esta vazia.\n");
+        return 0; // Lista vazia
+    }
+
+    // Procura o elemento a ser removido
     for (int i = 0; i < lista->tamanho; ++i)
     {
         if (lista->elementos[i].id == id)
         {
+            // Remove o elemento deslocando os subsequentes
             for (int j = i; j < lista->tamanho - 1; ++j)
             {
-                // Move os pacotes subsequentes uma posicao para frente
                 lista->elementos[j] = lista->elementos[j + 1];
             }
-            lista->tamanho--; // Decrementa o tamanho da lista apos remocao
-            return 1;         // Retorna 1 indicando que o pacote foi removido com sucesso
+            lista->tamanho--; // Decrementa o tamanho da lista
+
+            printf("Elemento com ID %d removido com sucesso.\n", id);
+            return 1; // Sucesso
         }
     }
 
-    printf("Elemento nao encontrado.\n");
-    return 0;
+    printf("Aviso: Elemento com ID %d nao encontrado.\n", id);
+    return 0; // Elemento nao encontrado
 }
 
 /* Funcao para carregar dados do arquivo */
@@ -344,7 +365,7 @@ void carregarDados(Lista *lista)
     FILE *file = fopen("D:\\GitHub Desktop\\C_CodeLab\\FICR_Atividades_&_Trabalhos\\Mayrton(DataStructure)\\pacoteViagens1\\pacotes.txt", "r");
     if (file == NULL)
     {
-        printf("Erro ao abrir arquivo.\n");
+        printf("Erro ao abrir o arquivo.\n");
         return;
     }
 
@@ -356,16 +377,11 @@ void carregarDados(Lista *lista)
         if (sscanf(linha, "ID: %d | Destino: %[^|] | Preco: R$ %f | Duracao: %d dias | Transporte: %c",
                    &p.id, p.destino, &p.precoPacote, &p.duracaoDias, &p.tipoTransporte) == 5)
         {
-            // Remove espaços em branco no final do destino
-            char *end = p.destino + strlen(p.destino) - 1;
-            while (end > p.destino && isspace(*end))
-                end--;
-            *(end + 1) = '\0';
-
             inserirElemento(lista, p);
         }
     }
     fclose(file);
+    printf("Dados carregados com sucesso.\n");
 }
 
 /* Funcao para salvar dados no arquivo */

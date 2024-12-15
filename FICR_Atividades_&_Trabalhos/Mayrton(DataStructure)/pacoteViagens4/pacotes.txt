@@ -1,2 +1,0 @@
-ID: 1 | Destino: Test TEst | Preco: R$ 7778.00 | Duracao: 7789 dias | Transporte: B (Onibus)
-ID: 2 | Destino: Test 2 | Preco: R$ 578.00 | Duracao: 85 dias | Transporte: B (Onibus)

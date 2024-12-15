@@ -125,7 +125,17 @@ Pilha *Excluir(Pilha *pilha)
         printf("A pilha nao existe!\n");
         return NULL;
     }
+    
+    // Libera a memória dos elementos da pilha
     free(pilha->elementos);
+    
+    // Limpa o conteúdo do arquivo
+    FILE *file = fopen(ARQUIVO, "w");
+    if (file)
+    {
+        fclose(file); // Apenas abre e fecha para limpar o conteúdo
+    }
+
     free(pilha);
     printf("Pilha excluida com sucesso!\n");
     return NULL;
