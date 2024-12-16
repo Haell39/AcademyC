@@ -27,8 +27,9 @@ int Enqueue(Fila *, Pacote);
 int Dequeue(Fila *);
 void VerPacoteInicio(Fila *);
 Fila *Excluir(Fila *);
-void CarregarDados(Fila *);
+void CarregarDados(Fila **);
 void SalvarDados(Fila *);
+Fila *CriarFila();
 
 /* Função para criar uma fila */
 Fila *Criar()
@@ -57,11 +58,6 @@ Fila *Criar()
 /* Função para inserir pacotes */
 int Enqueue(Fila *fila, Pacote novoPacote)
 {
-    if (fila == NULL)
-    {
-        printf("A fila nao foi criada!\n");
-        return 0;
-    }
 
     if ((fila->fim + 1) % TAM == fila->inicio)
     {
@@ -79,30 +75,34 @@ int Dequeue(Fila *fila)
 {
     if (fila == NULL)
     {
-        printf("A fila nao foi criada!\n");
+        printf("A fila não foi criada!\n");
         return 0;
     }
-
     if (fila->inicio == fila->fim)
     {
-        printf("Fila vazia!\n");
+        printf("Fila vazia! Não há pacotes para remover.\n");
         return 0;
     }
 
-    fila->inicio = (fila->inicio + 1) % TAM;
-    return 1;
+    // Remove o pacote do início da fila
+    Pacote pacoteRemovido = fila->elementos[fila->inicio];
+    fila->inicio = (fila->inicio + 1) % TAM; // Atualiza o índice de início
+
+    printf("Pacote removido:\n");
+    printf("|ID: %d\n", pacoteRemovido.id);
+    printf("|Destino: %s\n", pacoteRemovido.destino);
+    printf("|Preco: R$ %.2f\n", pacoteRemovido.precoPacote);
+    printf("|Duracao: %d dias\n", pacoteRemovido.duracaoDias);
+    printf("|Transporte: %c\n", pacoteRemovido.tipoTransporte);
+
+    return 1; // Retorna 1 para indicar que a remoção foi bem-sucedida
 }
 
 /* Função para ver pacote no início */
 void VerPacoteInicio(Fila *fila)
 {
-    if (fila == NULL)
-    {
-        printf("A fila nao foi criada!\n");
-        return;
-    }
 
-    if (fila->inicio == fila->fim)
+    if (fila == NULL || fila->inicio == fila->fim)
     {
         printf("Fila vazia!\n");
         return;
@@ -134,12 +134,17 @@ Fila *Excluir(Fila *fila)
 }
 
 /* Função para carregar dados */
-void CarregarDados(Fila *fila)
+void CarregarDados(Fila **fila)
 {
-    if (fila == NULL)
+    if (*fila == NULL)
     {
-        printf("A fila nao foi criada!\n");
-        return;
+        printf("A fila não existe. Criando uma nova fila...\n");
+        *fila = Criar();
+        if (*fila == NULL)
+        {
+            printf("Erro ao criar a fila!\n");
+            return;
+        }
     }
 
     FILE *file = fopen(ARQUIVO, "r");
@@ -150,6 +155,7 @@ void CarregarDados(Fila *fila)
     }
 
     char linha[256];
+    int pacotesCarregados = 0;
     while (fgets(linha, sizeof(linha), file) != NULL)
     {
         Pacote pacote;
@@ -157,25 +163,32 @@ void CarregarDados(Fila *fila)
                    &pacote.id, pacote.destino, &pacote.precoPacote,
                    &pacote.duracaoDias, &pacote.tipoTransporte) == 5)
         {
-            if (!Enqueue(fila, pacote))
+            if (Enqueue(*fila, pacote))
             {
+                pacotesCarregados++;
+            }
+            else
+            {
+                printf("Fila cheia, não foi possível carregar todos os pacotes!\n");
                 break;
             }
         }
     }
 
     fclose(file);
-    printf("Dados carregados com sucesso!\n");
+    if (pacotesCarregados > 0)
+    {
+        printf("%d dados carregados com sucesso!\n", pacotesCarregados);
+    }
+    else
+    {
+        printf("Nenhum dado foi carregado. O arquivo estava vazio ou não foi possível ler os dados.\n");
+    }
 }
 
 /* Função para salvar dados */
 void SalvarDados(Fila *fila)
 {
-    if (fila == NULL)
-    {
-        printf("A fila nao foi criada!\n");
-        return;
-    }
 
     FILE *file = fopen(ARQUIVO, "w");
     if (file == NULL)
@@ -206,12 +219,19 @@ void SalvarDados(Fila *fila)
     printf("Dados salvos com sucesso!\n");
 }
 
+Fila *CriarFila()
+{
+    Fila *novaFila = Criar();
+    if (novaFila == NULL)
+    {
+        printf("Erro ao criar a fila!\n");
+    }
+    return novaFila;
+}
+
 int main()
 {
-    Fila *fila = Criar();
-    if (fila == NULL)
-        return 1;
-
+    Fila *fila = NULL;
     int opcao;
     Pacote novoPacote;
 
@@ -231,6 +251,16 @@ int main()
         switch (opcao)
         {
         case 1: /*Inserir Pacotes*/
+            if (fila == NULL)
+            {
+                printf("A fila foi criada automaticamente.\n");
+                fila = Criar();
+                if (fila == NULL)
+                {
+                    printf("Erro ao criar a fila!\n");
+                    return 1;
+                }
+            }
             printf("\n---Inserir Pacote---\n");
             printf("|ID: ");
             scanf("%d", &novoPacote.id);
@@ -252,11 +282,14 @@ int main()
             break;
         case 3: /*Remover Pacote*/
             printf("\n---Remover Pacote---\n");
-            Dequeue(fila);
+            if (Dequeue(fila))
+            {
+                printf("Pacote removido com sucesso!\n");
+            }
             break;
         case 4: /*Carregar Dados*/
             printf("\n---Carregar Dados---\n");
-            CarregarDados(fila);
+            CarregarDados(&fila);
             break;
         case 5: /*Salvar Dados*/
             printf("\n---Salvar Dados---\n");

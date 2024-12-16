@@ -118,25 +118,9 @@ void SalvarDados(Pilha *pilha)
 }
 
 /* Função para excluir uma pilha */
-Pilha *Excluir(Pilha *pilha)
+void excluirPilha(Pilha *p)
 {
-    if (pilha == NULL)
-    {
-        printf("Pilha ja esta vazia!\n");
-        return NULL;
-    }
-
-    // Libera o array de elementos primeiro
-    if (pilha->elementos != NULL)
-    {
-        free(pilha->elementos);
-    }
-
-    // Libera a estrutura da pilha
-    free(pilha);
-
-    printf("Pilha excluida com sucesso!\n");
-    return NULL;
+    free(p);
 }
 
 /* Função para inserir pacotes */
