@@ -97,13 +97,7 @@ void excluirPilha(Pilha *pilha)
         pop(pilha);
     }
     free(pilha);
-
-    // Limpa o conteúdo do arquivo
-    FILE *file = fopen(ARQUIVO, "w");
-    if (file)
-    {
-        fclose(file); // Apenas abre e fecha para limpar o conteúdo
-    }
+    printf("Pilha e todos os elementos foram excluídos com sucesso.\n");
 }
 
 void salvarDados(Pilha *pilha)
@@ -229,7 +223,7 @@ int main()
         printf("6. Salvar dados no arquivo\n");
         printf("7. Carregar dados do arquivo\n");
         printf("8. Verificar se a pilha esta vazia\n");
-        printf("9. Excluir pilha e todos os elementos\n");
+        printf("9. Excluir pilha\n");
         printf("0. Sair\n");
         printf("Escolha uma opcao: ");
         scanf("%d", &opcao);
@@ -335,7 +329,7 @@ int main()
             {
                 excluirPilha(pilha);
                 pilha = NULL;
-                printf("Pilha e todos os elementos foram excluidos com sucesso.\n");
+                printf("Pilha excluida com sucesso.\n");
             }
             else
             {

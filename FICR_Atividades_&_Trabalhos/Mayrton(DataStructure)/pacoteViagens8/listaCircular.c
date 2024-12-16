@@ -17,7 +17,7 @@ typedef struct Pacote
 Pacote *lista = NULL;
 int ultimoId = 0;
 
-// Protótipos das funcões
+// Protótipos das funcões lokas
 Pacote *criarLista();
 void inserirElemento(Pacote **lista, int id, char *destino, float preco, int duracao, char transporte);
 void inserirElementoID(Pacote **lista, int posicao, int id, char *destino, float preco, int duracao, char transporte);
@@ -37,7 +37,7 @@ Pacote *criarLista()
     return NULL;
 }
 
-// Funcao para inserir elemento no final da lista
+// Funcao para inserir elemento no final da lista lokura total
 void inserirElemento(Pacote **lista, int id, char *destino, float preco, int duracao, char transporte)
 {
     Pacote *novoPacote = (Pacote *)malloc(sizeof(Pacote));
@@ -65,7 +65,7 @@ void inserirElemento(Pacote **lista, int id, char *destino, float preco, int dur
     }
 }
 
-// Funcao para inserir elemento em uma posicao especIfica
+// Funcao para inserir elemento em uma posicao especIfica mais lokura ainda
 void inserirElementoID(Pacote **lista, int posicao, int id, char *destino, float preco, int duracao, char transporte)
 {
     if (posicao < 0)
@@ -101,7 +101,7 @@ void inserirElementoID(Pacote **lista, int posicao, int id, char *destino, float
     } while (atual != *lista);
 }
 
-// Funcao para inserir elemento no inIcio da lista
+// Funcao para inserir elemento no inIcio da lista nivel hell on earth
 void inserirElementoInicio(Pacote **lista, int id, char *destino, float preco, int duracao, char transporte)
 {
     Pacote *novoPacote = (Pacote *)malloc(sizeof(Pacote));
