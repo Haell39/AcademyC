@@ -1,0 +1,2 @@
+ID: 22 | Destino: test te  | Preco: R$ 6694.00 | Duracao: 12 dias | Transporte: B (Onibus)
+ID: 66 | Destino: uu Test | Preco: R$ 5478.00 | Duracao: 12 dias | Transporte: A (Aviao)

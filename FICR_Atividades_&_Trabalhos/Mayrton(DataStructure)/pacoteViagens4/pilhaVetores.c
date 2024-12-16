@@ -22,7 +22,7 @@ typedef struct
 
 /* Funções implementadas */
 Pilha *Criar();
-Pilha *Excluir(Pilha *);
+Pilha *Excluir(Pilha *); // Correção: definição da função Excluir
 int Push(Pilha *, Pacote);
 void VerTopo(Pilha *);
 int Pop(Pilha *);
@@ -122,21 +122,19 @@ Pilha *Excluir(Pilha *pilha)
 {
     if (pilha == NULL)
     {
-        printf("A pilha nao existe!\n");
+        printf("Pilha ja esta vazia!\n");
         return NULL;
     }
-    
-    // Libera a memória dos elementos da pilha
-    free(pilha->elementos);
-    
-    // Limpa o conteúdo do arquivo
-    FILE *file = fopen(ARQUIVO, "w");
-    if (file)
+
+    // Libera o array de elementos primeiro
+    if (pilha->elementos != NULL)
     {
-        fclose(file); // Apenas abre e fecha para limpar o conteúdo
+        free(pilha->elementos);
     }
 
+    // Libera a estrutura da pilha
     free(pilha);
+
     printf("Pilha excluida com sucesso!\n");
     return NULL;
 }
