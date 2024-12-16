@@ -2,7 +2,7 @@
 #include <stdlib.h>
 #include <string.h>
 
-#define ARQUIVO "D:\\GitHub Desktop\\C_CodeLab\\FICR_Atividades_&_Trabalhos\\Mayrton(DataStructure)\\pacoteViagens7\\pacotes.txt"
+#define ARQUIVO "pacotes.txt"
 
 typedef struct
 {
@@ -105,7 +105,7 @@ void salvarDados(Pilha *pilha)
     if (!pilha)
         return;
 
-    FILE *file = fopen(ARQUIVO, "w");
+    FILE *file = fopen("pacotes.txt", "w");
     if (!file)
     {
         printf("Erro ao salvar os dados no arquivo.\n");
@@ -139,7 +139,7 @@ void carregarDados(Pilha *pilha)
     if (!pilha)
         return;
 
-    FILE *file = fopen(ARQUIVO, "r");
+    FILE *file = fopen("pacotes.txt", "r");
     if (!file)
     {
         printf("Arquivo nao encontrado.\n");

@@ -3,7 +3,7 @@
 #include <string.h>
 
 #define TAM 5
-#define ARQUIVO "D:\\GitHub Desktop\\C_CodeLab\\FICR_Atividades_&_Trabalhos\\Mayrton(DataStructure)\\pacoteViagens5\\pacotes.txt"
+#define ARQUIVO "pacotes.txt"
 
 typedef struct
 {
@@ -147,7 +147,7 @@ void CarregarDados(Fila **fila)
         }
     }
 
-    FILE *file = fopen(ARQUIVO, "r");
+    FILE *file = fopen("pacotes.txt", "r");
     if (file == NULL)
     {
         printf("Erro ao abrir o arquivo!\n");
@@ -190,7 +190,7 @@ void CarregarDados(Fila **fila)
 void SalvarDados(Fila *fila)
 {
 
-    FILE *file = fopen(ARQUIVO, "w");
+    FILE *file = fopen("pacotes.txt", "w");
     if (file == NULL)
     {
         printf("Erro ao abrir o arquivo!\n");

@@ -129,7 +129,7 @@ Fila *Excluir(Fila *fila)
 /* Função para carregar dados */
 void CarregarDados(Fila *fila)
 {
-    FILE *file = fopen("D:\\GitHub Desktop\\C_CodeLab\\FICR_Atividades_&_Trabalhos\\Mayrton(DataStructure)\\pacoteViagens6\\pacotes.txt", "r");
+    FILE *file = fopen("pacotes.txt", "r");
     if (file == NULL)
     {
         printf("Erro ao abrir o arquivo!\n");
@@ -154,7 +154,7 @@ void CarregarDados(Fila *fila)
 /* Função para salvar dados */
 void SalvarDados(Fila *fila)
 {
-    FILE *file = fopen("D:\\GitHub Desktop\\C_CodeLab\\FICR_Atividades_&_Trabalhos\\Mayrton(DataStructure)\\pacoteViagens6\\pacotes.txt", "w");
+    FILE *file = fopen("pacotes.txt", "w");
     if (file == NULL)
     {
         printf("Erro ao abrir o arquivo!\n");
