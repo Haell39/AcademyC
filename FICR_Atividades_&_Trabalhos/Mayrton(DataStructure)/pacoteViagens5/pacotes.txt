@@ -1,4 +1,0 @@
-ID: 136 | Destino: Refice   | Preco: R$ 500.00 | Duracao: 7 dias | Transporte: B (Onibus)
-ID: 137 | Destino: Renail   | Preco: R$ 750.00 | Duracao: 78 dias | Transporte: A (Aviao)
-ID: 99 | Destino: terra 2  | Preco: R$ 99988.00 | Duracao: 547 dias | Transporte: A (Aviao)
-ID: 6 | Destino: iodi s | Preco: R$ 4587.00 | Duracao: 4 dias | Transporte: B (Onibus)

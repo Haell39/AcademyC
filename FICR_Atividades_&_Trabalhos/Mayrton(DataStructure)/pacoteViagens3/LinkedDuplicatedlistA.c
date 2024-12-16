@@ -524,7 +524,7 @@ void SalvarDados(Lista *lista, const char *nomeArquivo)
         return;
     }
 
-    FILE *arquivo = fopen("D:\\GitHub Desktop\\C_CodeLab\\FICR_Atividades_&_Trabalhos\\Mayrton(DataStructure)\\pacoteViagens3\\pacotes.txt", "w");
+    FILE *arquivo = fopen("pacotes.txt", "w");
     if (arquivo == NULL)
     {
         printf("Erro ao abrir arquivo!\n");
@@ -558,7 +558,7 @@ void CarregarDados(Lista *lista, const char *nomeArquivo)
         return;
     }
 
-    FILE *arquivo = fopen("D:\\GitHub Desktop\\C_CodeLab\\FICR_Atividades_&_Trabalhos\\Mayrton(DataStructure)\\pacoteViagens3\\pacotes.txt", "r");
+    FILE *arquivo = fopen("pacotes.txt", "r");
     if (arquivo == NULL)
     {
         printf("Arquivo nao encontrado!\n");
