@@ -23,7 +23,7 @@ struct listaNo
     ListaNo *ant;
 };
 
-/* Function Prototypes */
+/* prototipos das funções */
 int AtualizarPacotes(Lista *, int, ListaNo);
 ListaNo *BuscarPacotes(Lista *, int);
 Lista *Criar();
@@ -87,7 +87,7 @@ int main()
             printf("\n---Inserir Pacote no Inicio---\n");
             printf("|ID: ");
             scanf("%d", &pacote.id);
-            getchar(); // Limpa o buffer do \n
+            getchar(); // isso limpa o buffer
             printf("|Destino: ");
             fgets(pacote.destino, 49, stdin);
             pacote.destino[strcspn(pacote.destino, "\n")] = '\0';
@@ -104,7 +104,7 @@ int main()
             printf("\n---Inserir Pacote no ID Especifico---\n");
             printf("|ID: ");
             scanf("%d", &pacote.id);
-            getchar(); // Limpa o buffer do \n
+            getchar();
             printf("|Destino: ");
             fgets(pacote.destino, 49, stdin);
             pacote.destino[strcspn(pacote.destino, "\n")] = '\0';
@@ -167,7 +167,7 @@ int main()
             printf("\n---Atualizar Pacotes---\n");
             printf("Digite o ID do pacote: ");
             scanf("%d", &pacote.id);
-            getchar(); // Limpa o buffer do \n
+            getchar();
             printf("|Destino: ");
             fgets(pacote.destino, 49, stdin);
             pacote.destino[strcspn(pacote.destino, "\n")] = '\0';
@@ -226,9 +226,6 @@ int main()
 
     return 0;
 }
-
-/* Function implementations remain the same as in the original code,
-   with only variable/struct names changed from 'receita' to 'pacote' */
 
 /* Função para inserir pacote no início */
 int InserirPacoteInicio(Lista *lista, ListaNo valor)

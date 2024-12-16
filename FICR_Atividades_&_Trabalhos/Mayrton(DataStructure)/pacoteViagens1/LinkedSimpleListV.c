@@ -264,7 +264,7 @@ void excluirLista(ListaPacotes *lista)
     printf("Lista excluida com sucesso!\n");
 }
 
-// Funcao principal
+// Funcao principal com while + o switch pro menu
 int main()
 {
     ListaPacotes lista;
@@ -277,13 +277,13 @@ int main()
     {
         printf("\n--- SISTEMA DE PACOTES DE VIAGEM ---\n");
         printf("1. Criar Lista\n");
-        printf("2. Inserir Elemento no Final\n");
-        printf("3. Inserir Elemento em Posicao\n");
-        printf("4. Inserir Elemento no Inicio\n");
+        printf("2. Inserir Viagem no Final\n");
+        printf("3. Inserir Viagem em Posicao\n");
+        printf("4. Inserir Viagem no Inicio\n");
         printf("5. Listar Elementos\n");
-        printf("6. Remover Elemento\n");
-        printf("7. Atualizar Elemento\n");
-        printf("8. Buscar Elemento\n");
+        printf("6. Remover Viagem\n");
+        printf("7. Atualizar Viagem\n");
+        printf("8. Buscar Viagem\n");
         printf("9. Tamanho da Lista\n");
         printf("10. Salvar Dados\n");
         printf("11. Carregar Dados\n");

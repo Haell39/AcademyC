@@ -209,7 +209,7 @@ int main()
             printf("\n---Inserir Pacote---\n");
             printf("|ID: ");
             scanf("%d", &novoPacote.id);
-            getchar(); // Limpa o buffer do \n
+            getchar();
             printf("|Destino: ");
             fgets(novoPacote.destino, 49, stdin);
             novoPacote.destino[strcspn(novoPacote.destino, "\n")] = '\0';
@@ -221,28 +221,28 @@ int main()
             scanf(" %c", &novoPacote.tipoTransporte);
             Enqueue(fila, novoPacote);
             break;
-        case 2: /*Ver Pacote no Início*/
+        case 2:
             printf("\n---Ver Pacote no Inicio---\n");
             VerPacoteInicio(fila);
             break;
-        case 3: /*Remover Pacote*/
+        case 3:
             printf("\n---Remover Pacote---\n");
             Dequeue(fila);
             printf("Pacote removido com sucesso!\n");
             break;
-        case 4: /*Carregar Dados*/
+        case 4:
             printf("\n---Carregar Dados---\n");
             CarregarDados(fila);
             break;
-        case 5: /*Salvar Dados*/
+        case 5:
             printf("\n---Salvar Dados---\n");
             SalvarDados(fila);
             break;
-        case 6: /*Excluir Fila*/
+        case 6:
             printf("\n---Excluir Fila---\n");
             fila = Excluir(fila);
             break;
-        case 0: /*Sair*/
+        case 0:
             printf("Saindo...\n");
             break;
         default:

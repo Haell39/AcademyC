@@ -22,7 +22,7 @@ typedef struct
 
 /* Funções implementadas */
 Pilha *Criar();
-Pilha *Excluir(Pilha *); // Correção: definição da função Excluir
+Pilha *Excluir(Pilha *); // Fazer correção aqui -->  definição da função Excluir
 int Push(Pilha *, Pacote);
 void VerTopo(Pilha *);
 int Pop(Pilha *);
@@ -87,7 +87,7 @@ void CarregarDados(Pilha *pilha)
     printf("Dados carregados com sucesso!\n");
 }
 
-/* Função para salvar dados em pacotes */
+/* Função para salvar dados em pacotes */ // Estudar Salvar e carregar e manipulação de arquivos em C e em Python!! e try and except tbm!!**
 void SalvarDados(Pilha *pilha)
 {
     FILE *file = fopen("pacotes.txt", "w");
@@ -222,7 +222,7 @@ int main()
             {
                 printf("|ID: ");
                 scanf("%d", &novoPacote.id);
-                getchar(); // Limpa o buffer do \n
+                getchar();
                 printf("|Destino: ");
                 fgets(novoPacote.destino, 49, stdin);
                 novoPacote.destino[strcspn(novoPacote.destino, "\n")] = '\0';

@@ -10,7 +10,7 @@ typedef struct
     char destino[50];
     float precoPacote;
     int duracaoDias;
-    char tipoTransporte; // 'A' para aéreo, 'B' para terrestre
+    char tipoTransporte; // 'A' para aéreo, 'B' para terrestre como sempre
 } Viagem;
 
 typedef struct No
@@ -36,6 +36,7 @@ void verificarPilhaVazia(Pilha *pilha)
     }
 }
 
+// função pra criar a pilha (nesse caso aqui manualmente professor)
 Pilha *criarPilha()
 {
     Pilha *pilha = (Pilha *)malloc(sizeof(Pilha));
@@ -100,6 +101,7 @@ void excluirPilha(Pilha *pilha)
     printf("Pilha e todos os elementos foram excluídos com sucesso.\n");
 }
 
+// Salvar no txt (vai estar em pacotes.txt na pasta gerada automaticamente pelo c -> os outros codigo tbm vao ser assim!)
 void salvarDados(Pilha *pilha)
 {
     if (!pilha)
@@ -134,6 +136,7 @@ void salvarDados(Pilha *pilha)
     printf("Dados salvos com sucesso.\n");
 }
 
+// carregar os dados salvos no txt (recuperar os dados se forem excluidos na lista)
 void carregarDados(Pilha *pilha)
 {
     if (!pilha)
@@ -177,6 +180,7 @@ void exibirViagem(Viagem *viagem)
     printf("Tipo de Transporte: %c\n", viagem->tipoTransporte);
 }
 
+// pra mostrar as viagens
 void listarViagens(Pilha *pilha)
 {
     if (ehVazia(pilha))
@@ -200,10 +204,10 @@ int main()
     int opcao;
 
     // Verifica se o arquivo existe e não está vazio
-    FILE *file = fopen(ARQUIVO, "r");
+    FILE *file = fopen(ARQUIVO, "r"); // novamente arquivologia estudar + isso aqui
     if (file)
     {
-        fseek(file, 0, SEEK_END); // Move o ponteiro para o final do arquivo
+        fseek(file, 0, SEEK_END); // Move o ponteiro para o final do arquivo(pesquisei pra saber, tinha esquecido esse SEEK, tem o SET CUR e END)
         if (ftell(file) > 0)      // Verifica se o tamanho do arquivo é maior que 0
         {
             pilha = criarPilha(); // Cria a pilha

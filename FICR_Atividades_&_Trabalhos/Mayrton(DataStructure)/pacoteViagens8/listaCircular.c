@@ -17,7 +17,7 @@ typedef struct Pacote
 Pacote *lista = NULL;
 int ultimoId = 0;
 
-// Protótipos das funcões lokas
+// Protótipos das funcões
 Pacote *criarLista();
 void inserirElemento(Pacote **lista, int id, char *destino, float preco, int duracao, char transporte);
 void inserirElementoID(Pacote **lista, int posicao, int id, char *destino, float preco, int duracao, char transporte);
@@ -37,7 +37,7 @@ Pacote *criarLista()
     return NULL;
 }
 
-// Funcao para inserir elemento no final da lista lokura total
+// Funcao para inserir elemento no final da lista
 void inserirElemento(Pacote **lista, int id, char *destino, float preco, int duracao, char transporte)
 {
     Pacote *novoPacote = (Pacote *)malloc(sizeof(Pacote));
@@ -65,7 +65,7 @@ void inserirElemento(Pacote **lista, int id, char *destino, float preco, int dur
     }
 }
 
-// Funcao para inserir elemento em uma posicao especIfica mais lokura ainda
+// Funcao para inserir elemento em uma posicao especIfica
 void inserirElementoID(Pacote **lista, int posicao, int id, char *destino, float preco, int duracao, char transporte)
 {
     if (posicao < 0)
@@ -101,7 +101,7 @@ void inserirElementoID(Pacote **lista, int posicao, int id, char *destino, float
     } while (atual != *lista);
 }
 
-// Funcao para inserir elemento no inIcio da lista nivel hell on earth
+// Funcao para inserir elemento no inIcio da lista deu treta aqui, mas ajeitei
 void inserirElementoInicio(Pacote **lista, int id, char *destino, float preco, int duracao, char transporte)
 {
     Pacote *novoPacote = (Pacote *)malloc(sizeof(Pacote));
@@ -152,7 +152,7 @@ void listarElementos(Pacote *lista)
     } while (atual != lista);
 }
 
-// Funcao para remover elemento por posicao
+// Funcao para remover elemento por posicao infernal essa aqui, me compliquei muito
 void removerElemento(Pacote **lista, int posicao)
 {
     if (*lista == NULL)
@@ -217,7 +217,7 @@ void atualizar(Pacote *lista, int id)
     scanf(" %c", &pacote->tipoTransporte);
 }
 
-// Funcao para buscar elemento por ID
+// Funcao para buscar elemento por ID (outra bem dificil)
 Pacote *buscarElemento(Pacote *lista, int id)
 {
     if (lista == NULL)
@@ -346,7 +346,7 @@ void entrarDestino(char *destino, int tamanho)
     printf("Destino: ");
     fgets(destino, tamanho, stdin);
 
-    // Remove o caractere de nova linha, se presente
+    // Remove o caractere de nova linha, se presente(pesquisei pra saber)
     size_t len = strlen(destino);
     if (len > 0 && destino[len - 1] == '\n')
     {
@@ -358,7 +358,7 @@ void entrarDestino(char *destino, int tamanho)
 int main()
 {
     int opcao, id, posicao, duracaoDias;
-    char destino[100]; // Aumentei o tamanho
+    char destino[100]; // Aumentei o tamanho(lembrar**)
     char tipoTransporte;
     float precoPacote;
 

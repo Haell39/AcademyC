@@ -95,7 +95,7 @@ int Dequeue(Fila *fila)
     printf("|Duracao: %d dias\n", pacoteRemovido.duracaoDias);
     printf("|Transporte: %c\n", pacoteRemovido.tipoTransporte);
 
-    return 1; // Retorna 1 para indicar que a remoção foi bem-sucedida
+    return 1; // Retorna 1 para indicar que a remoção foi bem-sucedida( tinha esquecido esse negocio de 1 e 0 foi otimo lembrar usei em varios codigos, no que o Senhor deu de exemplo usou return 1 0 -1, foi bom rever isso)
 }
 
 /* Função para ver pacote no início */
@@ -299,7 +299,7 @@ int main()
             printf("\n---Excluir Fila---\n");
             fila = Excluir(fila);
             break;
-        case 0: /*Sair*/
+        case 0: // --Sair-- :. o case 0 por ultimo nao afeta a lógica é apenas semantica/
             printf("Saindo...\n");
             break;
         default:
