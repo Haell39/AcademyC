@@ -8,8 +8,8 @@
       "args": [],
       "stopAtEntry": false,
       "externalConsole": true,
-      "cwd": "d:/GitHub Desktop/C_CodeLab",
-      "program": "d:/GitHub Desktop/C_CodeLab/build/Debug/outDebug",
+      "cwd": "d:/GitHub Desktop/C_CodeLab/UnlockingC/Arrays",
+      "program": "d:/GitHub Desktop/C_CodeLab/UnlockingC/Arrays/build/Debug/outDebug",
       "MIMode": "gdb",
       "miDebuggerPath": "gdb",
       "setupCommands": [
