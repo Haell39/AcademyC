@@ -1,2 +1,2 @@
 # AcademyC
- For more complex and advanced studies and projects in C language
+Para estudos mais complexos e avançados em linguagem C
