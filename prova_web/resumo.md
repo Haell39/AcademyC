@@ -1,9 +1,5 @@
 
 
-# 📘 Resumo Teórico Completo das Aulas 01 a 06
-
-Este resumo integra os principais conceitos teóricos das Aulas 01 a 06, destacando a evolução do aprendizado desde a introdução ao desenvolvimento web até o uso avançado de PHP no back-end. O foco está na teoria, explicando como cada tecnologia se conecta e contribui para a construção de aplicações web completas.
-
 ---
 
 ## Aula 01: Introdução ao Desenvolvimento Web
