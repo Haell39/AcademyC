@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Registro simples</title>
+    <style>
+        body {font-family: Arial;}
+        .error {color: red;}
+        .success {color: green;}
+    </style>
+</head>
+<body>
+    <h1>Registrar User</h1>
+    <form id="formRegistro" action="registrar.php" method="post">
+        <label for="nome">Nome:</label>
+        <input type="text" id="nome" name="nome">
+        <button type="submit">Enviar</button>
+    </form>
+    <p id="mensagem"></p>
+    <script>
+        document.getElementById("formRegistro").addEventListener("submit", function(event) {
+            var nome = document.getElementById("nome").value;
+            if (nome === "") {
+                event.preventDefault();
+                document.getElementById("mensagem").textContent = "Por favor, preencha o campo nome.";
+                document.getElementById("mensagem").classList = "error";
+            }
+        })
+    </script>
+</body>
+</html>
